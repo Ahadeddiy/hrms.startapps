@@ -1,39 +1,22 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { UserPlus,LayoutDashboard } from "lucide-react"
-// import UserAccountCreationForm from "../AccountCreationStep/AccountCreation";
 import BasicDetailsForm from "../BasicDetails/BasicDetail";
 import EducationDetailsForm from "../EducationDetails/EducationDetail";
 import BankDetailsForm from "../BankDetailStep/BankDetail";
 import Stepper from "../../../Stepper/Stepper";
-
-// API
 import { updateUserDetail } from "../../../../api/auth";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify"
 
-// Stepper labels
 const steps = ["Basic Details", "Educational Details", "Bank Details"];
 
-// Components for each step
 const stepComponents = [
-  // UserAccountCreationForm,
   BasicDetailsForm,
   EducationDetailsForm,
   BankDetailsForm,
 ];
-
-// Form type — must match your backend DTO
-
-type leaves ={
-      paidAllowed?:number;
-      wfhAllowed?:number;
-}
 type FormValues = {
-  // account: {
-  //   email: string;
-  //   password: string;
-  //   role: "admin" | "hr" | "employee";
-  // };
   basicDetails: {
     firstName: string;
     lastName: string;
@@ -49,7 +32,6 @@ type FormValues = {
     designation: string;
     department: string;
     employmentType: string;
-    leaves:leaves;
   };
   educationDetails: {
     qualification: string;
@@ -75,10 +57,6 @@ const EmployeeForm = () => {
   const methods = useForm<FormValues>({ mode: "onTouched",
   defaultValues: {
     basicDetails: {
-      leaves: {
-        paidAllowed: 1.5,
-        wfhAllowed: 1,
-      }
     }}
  });
 
@@ -94,24 +72,19 @@ const EmployeeForm = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    // console.log("Final Payload:", data);
     try {
-      // console.log(typeof userId);
       const keys = Object.keys(userId);
       const firstKey = keys[0];
       const firstValue = userId[firstKey];
       console.log(data);
       const res = await updateUserDetail(firstValue, data);
       setIsSubmitted(true);
-      // console.log("Response:", res);
     } catch (error: any) {
       console.error("Submission Error:", error.response?.data || error.message);
-      alert(
-        "Failed to submit: " + (error.response?.data?.message || error.message)
-      );
+      toast.error(error.message)
     }
   };
-  // console.log(userId);
+
 
   return (
     <FormProvider {...methods}>
@@ -156,7 +129,7 @@ const EmployeeForm = () => {
               <button
                 type="button"
                 onClick={handleBack}
-                className="bg-#226597 text-white font-medium px-6 py-2 rounded-lg hover:bg-[#1c4c7a] transition"
+                                className="bg-[#226597] text-white font-medium px-6 py-2 cursor-pointer rounded-lg hover:bg-[#1c4c7a] transition"
               >
                 Back
               </button>
