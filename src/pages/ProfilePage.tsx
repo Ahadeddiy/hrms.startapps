@@ -5,7 +5,6 @@ import { RootState } from "../store/store";
 import { useSelector } from "react-redux";
 import { Edit, X } from "lucide-react";
 import { useParams } from "react-router-dom";
-
 const editableFields = ["firstName", "lastName", "phone"];
 const maskedFields = ["adharNumber", "panNumber", "accountNumber", "ifscCode"];
 
@@ -158,7 +157,7 @@ const Profile: React.FC = () => {
           onClick={() => setIsEditing((prev) => !prev)}
           className="text-sm flex gap-2 items-center cursor-pointer font-medium text-white px-4 py-2 rounded-md transition hover:text-gray-100"
         >
-          {isEditing ? <X /> : <Edit />}
+          {isEditing ? <X/> : <Edit />}
         </button>
       </div>
 
