@@ -15,6 +15,7 @@ import { logout } from "../../../feature/user/userSlice";
 import { RootState } from "../../../store/store";
 import profileImage from "../../../assets/user-alt.svg";
 import { getEmployeeById } from "../../../api/auth";
+import BackButton from "../../common/BackButtonComp/BackButton";
 
 const EmployeeLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -158,7 +159,8 @@ const EmployeeLayout: React.FC = () => {
 
         {/* Outlet Section */}
         <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
-          <header>
+          <header className="mb-3 flex gap-2">
+            <BackButton/>
             <h2 className="text-xl font-semibold text-[#113F67]">
               {pageTitle}
             </h2>
