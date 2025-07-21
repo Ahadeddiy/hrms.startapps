@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
+import NotificationModal from "../../Modal/NotificationsModal";
 import {
   LayoutDashboard,
   Users,
@@ -13,16 +14,19 @@ import {
   HandCoins,
   Flag,
 } from "lucide-react";
+import BackButton from "../../common/BackButtonComp/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../feature/user/userSlice";
 import { RootState } from "../../../store/store";
 import profileImage from "../../../assets/userlogo.png";
+
 
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
   const role = user?.role?.toLowerCase() || "guest";
+  const userId = user?.userId
   const location = useLocation();
 
   const [pageTitle, setPageTitle] = useState("Dashboard");
@@ -156,7 +160,6 @@ const AdminLayout: React.FC = () => {
     dispatch(logout());
     navigate("/");
   };
-
   return (
     <div className="flex h-screen bg-[#F3F9FB]">
       <aside className="w-72 bg-[#113F67] text-white flex flex-col p-4 shadow-lg">
@@ -229,10 +232,14 @@ const AdminLayout: React.FC = () => {
             Welcome, {role.charAt(0).toUpperCase() + role.slice(1)}
           </h1>
           <div className="flex items-center gap-4">
-            <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
-              <Bell size={20} className="text-[#113F67]" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
-            </button>
+           <button
+  className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
+>
+  <Bell size={20} className="text-[#113F67]" />
+  {/* <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full"> */}
+   <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full text-white font-xs"></span>
+
+</button>
             <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
               <Mail size={20} className="text-[#113F67]" />
             </button>
@@ -240,7 +247,8 @@ const AdminLayout: React.FC = () => {
         </div>
 
         <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
-          <header className="mb-3">
+          <header className={`mb-3 flex ${location.pathname === "/admin/dashboard" ? 'gap-4 mr-6' : 'gap-2'}`}>
+           { location.pathname!=="/admin/dashboard"  && <BackButton />} 
             <h2 className="text-xl font-semibold text-[#113F67]">
               {pageTitle}
             </h2>
