@@ -34,7 +34,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
           {...register("bankDetails.bankName", {
             required: "Bank name is required",
           })}
-          className={inputClass}
+           className={inputClass}
           disabled={readOnly}
         />
         {bankErrors.bankName && (
