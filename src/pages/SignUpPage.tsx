@@ -10,7 +10,8 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import "react-toastify/dist/ReactToastify.css";
-
+import loginBg from "../assets/loginBg.jpg"; // Ensure this path is correct
+import logo from "../assets/startappssLogo.png";
 
 interface FormData {
   email: string;
@@ -51,9 +52,7 @@ const SignUpPage: React.FC = () => {
   useEffect(() => {
     const checkFirstUser = async () => {
       try {
-        const res = await axios.get(
-          "/api/users/first-user-check"
-        );
+        const res = await axios.get("/api/users/first-user-check");
         setIsFirstUser(res.data.isFirst);
       } catch (err) {
         console.error("Error checking first user", err);
@@ -67,10 +66,7 @@ const SignUpPage: React.FC = () => {
     setIsLoading(true);
     try {
       const formData = isFirstUser ? { ...data, role: "SuperAdmin" } : data;
-      const res = await API.post(
-        "/api/users/register",
-        formData
-      );
+      const res = await API.post("/api/users/register", formData);
       toast.success("Account created successfully!");
       const userId = res.data.userId;
       setTimeout(() => navigate(`/admin/add-employee-details/${userId}`), 1500);
@@ -207,6 +203,7 @@ const SignUpPage: React.FC = () => {
     </div>
   </div>
 </div>
+
   );
 };
 
