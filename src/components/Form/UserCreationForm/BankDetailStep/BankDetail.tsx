@@ -29,7 +29,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
       {/* Bank Name */}
       <div>
-        <label className="block font-semibold">Bank Name</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">Bank Name</label>
         <input
           {...register("bankDetails.bankName", {
             required: "Bank name is required",
@@ -44,7 +44,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
 
       {/* Account Number */}
       <div>
-        <label className="block font-semibold">Account Number</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">Account Number</label>
         <input
           {...register("bankDetails.accountNumber", {
             required: "Account number is required",
@@ -66,7 +66,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
 
       {/* IFSC Code */}
       <div>
-        <label className="block font-semibold">IFSC Code</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">IFSC Code</label>
         <input
           {...register("bankDetails.ifscCode", {
             required: "IFSC code is required",
@@ -91,7 +91,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
 
       {/* Branch Name */}
       <div>
-        <label className="block font-semibold">Branch Name</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">Branch Name</label>
         <input
           {...register("bankDetails.branchName", {
             required: "Branch name is required",
@@ -108,7 +108,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
 
       {/* Account Holder Name */}
       <div>
-        <label className="block font-semibold">Account Holder Name</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">Account Holder Name</label>
         <input
           {...register("bankDetails.accountHolderName", {
             required: "Account holder name is required",
@@ -125,7 +125,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
 
       {/* Aadhar Number */}
       <div>
-        <label className="block font-semibold">Aadhar Number</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">Aadhar Number</label>
         <input
           {...register("bankDetails.adharNumber", {
             required: "Aadhar number is required",
@@ -148,7 +148,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
 
       {/* PAN Number */}
       <div>
-        <label className="block font-semibold">PAN Number</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">PAN Number</label>
         <input
           {...register("bankDetails.panNumber", {
             required: "PAN number is required",
