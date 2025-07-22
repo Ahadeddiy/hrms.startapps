@@ -55,8 +55,15 @@ const [showArchived, setShowArchived] = useState(false);
   ];
 
   // Utility to safely display text or fallback
-  const safeDisplay = (value?: string | null) =>
-    value && value.trim() !== "" ? value : "N/A";
+ const capitalize = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+const safeDisplay = (value?: string | null, capitalizeText = false): string => {
+  if (!value || value.trim() === "") return "N/A";
+  const trimmed = value.trim();
+  return capitalizeText ? capitalize(trimmed) : trimmed;
+};
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -352,13 +359,13 @@ const [showArchived, setShowArchived] = useState(false);
           {paginatedFiltered.map((emp, index) => (
             <tr key={emp._id} className={`${index % 2 === 0 ? (!showArchived ? "bg-white text-black" : "bg-gray-100 text-gray-500") : "bg-[#F3F9FB]"}`}>
               <td className="px-4 py-3 font-medium">
-                {safeDisplay(emp.firstName)} {safeDisplay(emp.lastName)}
+                {safeDisplay(emp.firstName,true)} {safeDisplay(emp.lastName,true)}
               </td>
-              <td className="px-4 py-3">{safeDisplay(emp.email)}</td>
-              <td className="px-4 py-3">{safeDisplay(emp.designation)}</td>
+              <td className="px-4 py-3">{safeDisplay(emp.email,true)}</td>
+              <td className="px-4 py-3">{safeDisplay(emp.designation,true)}</td>
               <td className="px-4 py-3">{emp.joiningDate ? new Date(emp.joiningDate).toLocaleDateString("en-GB") : "N/A"}</td>
-              <td className="px-4 py-3">{safeDisplay(emp.employmentType)}</td>
-              <td className="px-4 py-3">{safeDisplay(emp.gender)}</td>
+              <td className="px-4 py-3">{safeDisplay(emp.employmentType,true)}</td>
+              <td className="px-4 py-3">{safeDisplay(emp.gender,true)}</td>
               <td className="px-4 py-3 flex gap-2">
                 <button 
                   onClick={() => handleViewProfile(emp._id)}
