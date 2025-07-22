@@ -406,7 +406,7 @@ const [showArchived, setShowArchived] = useState(false);
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md disabled:opacity-40"
+            className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md disabled:opacity-0"
           >
             Prev
           </button>
@@ -418,7 +418,7 @@ const [showArchived, setShowArchived] = useState(false);
           <button
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md hover:bg-[#1c4c7a] disabled:opacity-40"
+            className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md hover:bg-[#1c4c7a] disabled:opacity-0"
           >
             Next
           </button>
