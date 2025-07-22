@@ -328,7 +328,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
         </div>
       )}
       </div>
-      <div className="flex gap-2 items-center mt-5">
+      {/* <div className="flex gap-2 items-center mt-5">
        <h4>Add Leave Details</h4>
          <div className="relative group w-fit cursor-pointer">
       <Info className="text-blue-600" size={18} />
@@ -372,7 +372,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
         
        </div>
       </div>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -22,12 +22,8 @@ const EducationDetailsForm: React.FC<{ readOnly?: boolean }> = ({
 
   const eduErrors = errors.educationDetails || {};
 
-  const inputClass = `w-full border px-3 py-2 rounded ${
-    readOnly ? "bg-gray-100 cursor-not-allowed" : ""
-  }`;
-
-  const selectClass = `w-full border px-3 py-2 rounded bg-white ${
-    readOnly ? "bg-gray-100 cursor-not-allowed text-gray-500" : ""
+  const inputClass = `w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm text-sm focus:outline-none ${
+    readOnly ? "bg-gray-100 cursor-not-allowed" : "bg-white"
   }`;
 
   return (
@@ -42,7 +38,7 @@ const EducationDetailsForm: React.FC<{ readOnly?: boolean }> = ({
             required: !readOnly ? "Highest qualification is required" : false,
           })}
           disabled={readOnly}
-          className={selectClass}
+          className={inputClass}
         >
           <option value="">Select degree</option>
           {degrees.map((deg) => (
@@ -82,32 +78,38 @@ const EducationDetailsForm: React.FC<{ readOnly?: boolean }> = ({
       </div>
 
       {/* Year of Passing */}
-      <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-700 mb-1">
-          Year of Passing
-        </label>
-        <input
-          type="text"
-          {...register("educationDetails.yearOfPassing", {
-            required: !readOnly ? "Year of passing is required" : false,
-            pattern: !readOnly
-              ? {
-                  value: /^\d{4}$/,
-                  message: "Enter a valid 4-digit year",
-                }
-              : undefined,
-          })}
-          disabled={readOnly}
-          className={inputClass}
-        />
-        <div className="h-5 mt-1">
-          {!readOnly && eduErrors.yearOfPassing && (
-            <p className="text-red-500 text-sm">
-              {eduErrors.yearOfPassing.message}
-            </p>
-          )}
-        </div>
-      </div>
+   <div className="flex flex-col">
+  <label className="text-sm font-medium text-gray-700 mb-1">
+    Year of Passing
+  </label>
+  <div className="relative">
+    <select
+      {...register("educationDetails.yearOfPassing", {
+        required: !readOnly ? "Year of passing is required" : false,
+      })}
+      disabled={readOnly}
+      className={inputClass}
+    >
+      <option value="">Select year</option>
+      {Array.from({ length: new Date().getFullYear() - 2000 + 1 }, (_, i) => {
+        const year = new Date().getFullYear() - i;
+        return (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        );
+      })}
+    </select>
+  </div>
+
+  <div className="h-5 mt-1">
+    {!readOnly && eduErrors.yearOfPassing && (
+      <p className="text-red-500 text-sm">{eduErrors.yearOfPassing.message}</p>
+    )}
+  </div>
+</div>
+
+
 
       {/* Grade / Percentage */}
       <div className="flex flex-col">
