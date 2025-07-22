@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { UserPlus,LayoutDashboard } from "lucide-react"
+import { UserPlus, LayoutDashboard } from "lucide-react";
 import BasicDetailsForm from "../BasicDetails/BasicDetail";
 import EducationDetailsForm from "../EducationDetails/EducationDetail";
 import BankDetailsForm from "../BankDetailStep/BankDetail";
 import Stepper from "../../../Stepper/Stepper";
 import { updateUserDetail } from "../../../../api/auth";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 const steps = ["Basic Details", "Educational Details", "Bank Details"];
 
@@ -16,6 +16,7 @@ const stepComponents = [
   EducationDetailsForm,
   BankDetailsForm,
 ];
+
 type FormValues = {
   basicDetails: {
     firstName: string;
@@ -54,16 +55,22 @@ const EmployeeForm = () => {
   const userId = useParams<{ userId: string }>();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const methods = useForm<FormValues>({ mode: "onTouched",
-  defaultValues: {
-    basicDetails: {
-    }}
- });
+
+  const methods = useForm<FormValues>({
+    mode: "onChange",
+    defaultValues: {
+      basicDetails: {},
+      educationDetails: {},
+      bankDetails: {},
+    },
+  });
 
   const CurrentStepComponent = stepComponents[activeStep];
 
+  const stepFields = ["basicDetails", "educationDetails", "bankDetails"];
+
   const handleNext = async () => {
-    const isStepValid = await methods.trigger();
+    const isStepValid = await methods.trigger(stepFields[activeStep]);
     if (isStepValid) setActiveStep((prev) => prev + 1);
   };
 
@@ -72,25 +79,30 @@ const EmployeeForm = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    try {
-      const keys = Object.keys(userId);
-      const firstKey = keys[0];
-      const firstValue = userId[firstKey];
-      console.log(data);
-      const res = await updateUserDetail(firstValue, data);
-      setIsSubmitted(true);
-    } catch (error: any) {
-      console.error("Submission Error:", error.response?.data || error.message);
-      toast.error(error.message)
+    const isStepValid = await methods.trigger(stepFields[activeStep]);
+    if (!isStepValid) return;
+
+    if (activeStep === steps.length - 1) {
+      try {
+        const keys = Object.keys(userId);
+        const firstKey = keys[0];
+        const firstValue = userId[firstKey];
+
+        const res = await updateUserDetail(firstValue, data);
+        setIsSubmitted(true);
+      } catch (error: any) {
+        console.error("Submission Error:", error.response?.data || error.message);
+        toast.error(error.message);
+      }
+    } else {
+      setActiveStep((prev) => prev + 1);
     }
   };
-
 
   return (
     <FormProvider {...methods}>
       {isSubmitted ? (
-        <div className="flex flex-col items-center bg-[#113F67] justify-center rounded-lg p-20 m-20 text-center mt-20 animate-fade-in ">
-          {/* <h1 className="text-3xl font-bold text-white">Thank You</h1> */}
+        <div className="flex flex-col items-center bg-[#113F67] justify-center rounded-lg p-20 m-20 text-center mt-20 animate-fade-in">
           <h2 className="text-2xl font-semibold text-white mb-2">
             Employee Created Successfully
           </h2>
@@ -100,23 +112,23 @@ const EmployeeForm = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
             <button
-              onClick={() => window.location.href="/employee-management"}
+              onClick={() => (window.location.href = "/employee-management")}
               className="bg-[#226597] text-white flex gap-2 px-6 py-2 rounded-lg cursor-pointer hover:bg-[#87C0CD] transition shadow-sm w-full sm:w-auto"
             >
-             <UserPlus size={18}/> <p>Add User</p> 
+              <UserPlus size={18} /> <p>Add User</p>
             </button>
             <button
               onClick={() => (window.location.href = "/dashboard")}
               className="bg-[#226597] text-white flex gap-2 px-6 py-2 rounded-lg cursor-pointer hover:bg-[#87C0CD] transition shadow-sm w-full sm:w-auto"
             >
-              <LayoutDashboard size={18}/> <p>Dashboard</p> 
+              <LayoutDashboard size={18} /> <p>Dashboard</p>
             </button>
           </div>
         </div>
       ) : (
         <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="mx-auto p-6 max-w-4xl bg-white  rounded-xl"
+          onSubmit={(e) => e.preventDefault()}
+          className="mx-auto p-6 max-w-4xl bg-white rounded-xl"
         >
           <Stepper steps={steps} activeStep={activeStep} />
 
@@ -129,7 +141,7 @@ const EmployeeForm = () => {
               <button
                 type="button"
                 onClick={handleBack}
-                                className="bg-[#226597] text-white font-medium px-6 py-2 cursor-pointer rounded-lg hover:bg-[#1c4c7a] transition"
+                className="bg-[#226597] text-white font-medium px-6 py-2 cursor-pointer rounded-lg hover:bg-[#1c4c7a] transition"
               >
                 Back
               </button>
@@ -141,13 +153,12 @@ const EmployeeForm = () => {
                 onClick={handleNext}
                 className="bg-[#226597] text-white font-medium px-6 py-2 cursor-pointer rounded-lg hover:bg-[#1c4c7a] transition"
               >
-                <div className="flex justify-center gap-2">
-                  Next
-                </div>
+                <div className="flex justify-center gap-2">Next</div>
               </button>
             ) : (
               <button
-                type="submit"
+                type="button"
+                onClick={() => onSubmit(methods.getValues())}
                 className="bg-[#226597] text-white font-medium px-6 py-2 rounded-lg hover:bg-[#1c4c7a] transition"
               >
                 Submit
