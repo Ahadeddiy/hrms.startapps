@@ -22,7 +22,9 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
   } = useFormContext<FormValues>();
 
   const bankErrors = errors?.bankDetails || {};
-
+  const inputClass = `w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm text-sm focus:outline-none ${
+    readOnly ? "bg-gray-100 cursor-not-allowed" : "bg-white"
+  }`;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
       {/* Bank Name */}
@@ -32,7 +34,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
           {...register("bankDetails.bankName", {
             required: "Bank name is required",
           })}
-          className="w-full border px-3 py-2 rounded"
+          className={inputClass}
           disabled={readOnly}
         />
         {bankErrors.bankName && (
@@ -50,7 +52,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
               /^[0-9]{9,18}$/.test(value) ||
               "Account number must be between 9 to 18 digits",
           })}
-          className="w-full border px-3 py-2 rounded"
+          className={inputClass}
           inputMode="numeric"
           maxLength={18}
           disabled={readOnly}
@@ -73,7 +75,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
               message: "Invalid IFSC code format",
             },
           })}
-          className="w-full border px-3 py-2 rounded uppercase"
+          className={inputClass+"uppercase"}
           maxLength={11}
           onInput={(e) => {
             if (readOnly) return;
@@ -94,7 +96,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
           {...register("bankDetails.branchName", {
             required: "Branch name is required",
           })}
-          className="w-full border px-3 py-2 rounded"
+          className={inputClass}
           disabled={readOnly}
         />
         {bankErrors.branchName && (
@@ -111,7 +113,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
           {...register("bankDetails.accountHolderName", {
             required: "Account holder name is required",
           })}
-          className="w-full border px-3 py-2 rounded"
+          className={inputClass}
           disabled={readOnly}
         />
         {bankErrors.accountHolderName && (
@@ -132,7 +134,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
               message: "Aadhar must be exactly 12 digits",
             },
           })}
-          className="w-full border px-3 py-2 rounded"
+          className={inputClass}
           inputMode="numeric"
           maxLength={12}
           disabled={readOnly}
@@ -155,7 +157,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
               message: "Invalid PAN number format",
             },
           })}
-          className="w-full border px-3 py-2 rounded uppercase"
+          className={inputClass+"uppercase"}
           maxLength={10}
           onInput={(e) => {
             if (readOnly) return;
