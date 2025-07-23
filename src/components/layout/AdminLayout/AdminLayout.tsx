@@ -160,6 +160,8 @@ const AdminLayout: React.FC = () => {
     dispatch(logout());
     navigate("/");
   };
+  const [showNotification, setShowNotification] = useState(false);
+const [notifications, setNotifications] = useState([])
   return (
     <div className="flex h-screen bg-[#F3F9FB]">
       <aside className="w-72 bg-[#113F67] text-white flex flex-col p-4 shadow-lg">
@@ -235,7 +237,8 @@ const AdminLayout: React.FC = () => {
            <button
   className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
 >
-  <Bell size={20} className="text-[#113F67]" />
+  <Bell size={20} className="text-[#113F67]"
+    onClick={() => setShowNotification((prev) => !prev)} />
   {/* <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full"> */}
    <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full text-white font-xs"></span>
 
@@ -256,6 +259,12 @@ const AdminLayout: React.FC = () => {
           <Outlet />
         </section>
       </main>
+       {showNotification && (
+  <NotificationModal
+    onClose={() => setShowNotification(false)}
+    notifications={notifications}
+  />
+)}
     </div>
   );
 };
