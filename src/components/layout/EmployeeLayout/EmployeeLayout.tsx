@@ -149,9 +149,10 @@ const EmployeeLayout: React.FC = () => {
             Welcome, {role.charAt(0).toUpperCase() + role.slice(1)}
           </h1>
           <div className="flex items-center gap-4">
-            <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
+            <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
+            onClick={() => setShowNotification((prev) => !prev)}>
               <Bell size={20} className="text-[#113F67]"
-                onClick={() => setShowNotification((prev) => !prev)} />
+                 />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
             </button>
             <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
-import NotificationModal from "../../Modal/NotificationsModal";
+import NotificationModal from "../../Modal/NotificationModal";
 import {
   LayoutDashboard,
   Users,
@@ -236,9 +236,9 @@ const [notifications, setNotifications] = useState([])
           <div className="flex items-center gap-4">
            <button
   className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
->
+  onClick={() => setShowNotification((prev) => !prev)}>
   <Bell size={20} className="text-[#113F67]"
-    onClick={() => setShowNotification((prev) => !prev)} />
+   />
   {/* <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full"> */}
    <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full text-white font-xs"></span>
 
