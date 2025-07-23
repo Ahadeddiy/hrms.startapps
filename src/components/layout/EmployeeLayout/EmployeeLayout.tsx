@@ -16,7 +16,7 @@ import { RootState } from "../../../store/store";
 import profileImage from "../../../assets/user-alt.svg";
 import { getEmployeeById } from "../../../api/auth";
 import BackButton from "../../common/BackButtonComp/BackButton";
-
+import NotificationModal from "../../Modal/NotificationModal";
 const EmployeeLayout: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,6 +72,8 @@ const EmployeeLayout: React.FC = () => {
     dispatch(logout());
     navigate("/login");
   };
+  const [showNotification, setShowNotification] = useState(false);
+  const [notifications, setNotifications] = useState([])
 
   return (
     <div className="flex h-screen bg-[#F3F9FB]">
@@ -148,7 +150,8 @@ const EmployeeLayout: React.FC = () => {
           </h1>
           <div className="flex items-center gap-4">
             <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
-              <Bell size={20} className="text-[#113F67]" />
+              <Bell size={20} className="text-[#113F67]"
+                onClick={() => setShowNotification((prev) => !prev)} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
             </button>
             <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
@@ -168,6 +171,12 @@ const EmployeeLayout: React.FC = () => {
           <Outlet />
         </section>
       </main>
+           {showNotification && (
+  <NotificationModal
+    onClose={() => setShowNotification(false)}
+    notifications={notifications}
+  />
+)}
     </div>
   );
 };
