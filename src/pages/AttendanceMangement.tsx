@@ -260,7 +260,7 @@ const AttendanceManagement = () => {
                 {loading ? (
                   <tr>
                     <td colSpan={5} className="text-center py-4 text-[#226597]">
-                      Loading...
+                      Loading
                     </td>
                   </tr>
                 ) : filteredTodayAttendance.length === 0 ? (
