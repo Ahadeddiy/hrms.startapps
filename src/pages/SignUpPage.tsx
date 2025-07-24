@@ -197,7 +197,7 @@ const SignUpPage: React.FC = () => {
           to="/login"
           className="text-[#226597] font-semibold hover:underline cursor-pointer"
         >
-          Log In
+          Login
         </Link>
       </p>
     </div>
