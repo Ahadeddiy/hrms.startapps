@@ -90,44 +90,45 @@ const EmployeeLayout: React.FC = () => {
     </div>
 
     {/* Navigation */}
-    <nav className="flex flex-col gap-3 flex-grow overflow-y-auto">
-      {sidebarLinks.map(({ label, path, icon: Icon }) =>
-        label === "Approval History" ? (
-          <div
-            key={label}
-            className="flex items-center justify-between gap-2 bg-gray-400 text-white cursor-not-allowed px-4 py-2 rounded-md text-base font-medium"
-          >
-            <div className="flex items-center gap-3">
-              <Icon size={18} className="text-white" />
-              {label}
-            </div>
-            <button
-              onClick={() => alert("This feature is under development.")}
-              className="bg-[#113F67] text-white w-5 h-5 rounded-full text-xs font-semibold flex items-center justify-center hover:bg-[#226597]"
-              title="This section is in progress"
-            >
-              i
-            </button>
-          </div>
-        ) : (
-          <NavLink
-            key={label}
-            to={path}
-            end={label === "Dashboard"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-2 rounded-md text-base font-medium transition-all ${
-                isActive
-                  ? "bg-[#226597] text-white font-semibold"
-                  : "hover:bg-[#226597] hover:text-white text-white"
-              }`
-            }
-          >
-            <Icon size={18} className="text-white" />
-            {label}
-          </NavLink>
-        )
-      )}
-    </nav>
+    <nav className="flex flex-col gap-3 flex-grow overflow-y-auto pr-2 custom-scrollbar">
+  {sidebarLinks.map(({ label, path, icon: Icon, disabled }) =>
+    disabled ? (
+      <div
+        key={label}
+        className="flex items-center justify-between gap-2 bg-gray-400 text-white cursor-not-allowed px-4 py-2 rounded-md text-base font-medium"
+      >
+        <div className="flex items-center gap-3">
+          <Icon size={18} className="text-white" />
+          {label}
+        </div>
+        <button
+          onClick={() => alert(`${label} is under development.`)}
+          className="bg-[#113F67] text-white w-5 h-5 rounded-full text-xs font-semibold flex items-center justify-center hover:bg-[#226597]"
+          title="This section is in progress"
+        >
+          i
+        </button>
+      </div>
+    ) : (
+      <NavLink
+        key={label}
+        to={path}
+        end={label === "Dashboard"}
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-2 rounded-md text-base font-medium transition-all ${
+            isActive
+              ? "bg-[#226597] text-white font-semibold"
+              : "hover:bg-[#226597] hover:text-white text-white"
+          }`
+        }
+      >
+        <Icon size={18} className="text-white" />
+        {label}
+      </NavLink>
+    )
+  )}
+</nav>
+
 
     {/* Logout Button */}
     <button

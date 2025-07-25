@@ -141,7 +141,7 @@ const AdminLayout: React.FC = () => {
         onClick={(e) => {
           if (disabled) {
             e.preventDefault();
-            alert(`${label} is under progress 🚧`);
+            alert(`${label} is under progress`);
           } else {
             setPageTitle(label);
           }
