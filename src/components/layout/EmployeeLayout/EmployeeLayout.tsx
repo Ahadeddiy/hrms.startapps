@@ -17,6 +17,8 @@ import { logout } from "../../../feature/user/userSlice";
 import { RootState } from "../../../store/store";
 import profileImage from "../../../assets/user-alt.svg";
 import { getEmployeeById } from "../../../api/auth";
+import { fetchNotifications } from "../../../api/notification";
+import NotificationModal from "../../Modal/NotificationModal";
 
 const EmployeeLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,53 +27,67 @@ const EmployeeLayout: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const [employeeData, setEmployeeData] = useState<any>(null);
   const [pageTitle, setPageTitle] = useState("Dashboard");
+  const [showNotification, setShowNotification] = useState(false);
+  const [notifications, setNotifications] = useState([])
+  const userId = user?.userId;
+  const role = user?.role
+  const fullName = user?.name
 
   const sidebarLinks = [
-    { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-      { label: "Attendance", path: "/attendance", icon: UserCheck },
-      { label: "Leave Requests", path: "/leave-requests", icon: CalendarCheck },
-      { label: "Document Upload", path: "/documents", icon: FileText ,disabled:true},
-      { label: "Change Requests", path: "/change-requests", icon: Repeat ,disabled:true},
-      { label: "Approval History", path: "/approval-history", icon: Clock ,disabled:true},
-      { label: "Profile", path: "/profile", icon: User },
+    { label: "Dashboard", path: "/employee/", icon: LayoutDashboard },
+    { label: "Attendance", path: "/employee/attendance", icon: UserCheck },
+    {
+      label: "Leave Requests",
+      path: "/employee/leave-requests",
+      icon: CalendarCheck,
+    },
+    {
+      label: "Document Upload",
+      path: "/employee/documents",
+      icon: FileText,
+      disabled: true,
+    },
+    {
+      label: "Change Requests",
+      path: "/employee/change-requests",
+      icon: Repeat,
+      disabled: true,
+    },
+    {
+      label: "Approval History",
+      path: "/employee/approval-history",
+      icon: Clock,
+      disabled: true,
+    },
+    { label: "Profile", path: "/employee/profile", icon: User },
   ];
 
   useEffect(() => {
-    const fetchEmployee = async () => {
-      if (user?.userId) {
-        try {
-          const data = await getEmployeeById(user.userId);
-          setEmployeeData(data?.employee || data);
-        } catch (err) {
-          console.error("Error loading employee data:", err);
-        }
-      }
-    };
-
-    fetchEmployee();
-  }, [user]);
-
-  useEffect(() => {
-    const matched = sidebarLinks.find((link) =>
-      link.path === "/employee/"
-        ? location.pathname === "/employee/"
-        : location.pathname.startsWith(link.path)
+    const current = sidebarLinks.find((link) =>
+      location.pathname.startsWith(link.path)
     );
-    setPageTitle(matched?.label || "Dashboard");
+    if (current) {
+      setPageTitle(current.label);
+    }
   }, [location.pathname]);
-
-  const fullName =
-    employeeData?.firstName && employeeData?.lastName
-      ? `${employeeData.firstName} ${employeeData.lastName}`
-      : "Employee";
-
-  const role = user?.role || "Employee";
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
   };
-
+useEffect(()=>{
+    const fetchNotificationData = async ()=>{
+      try{
+          const notificationData = await fetchNotifications(userId)
+          setNotifications(notificationData)
+      }
+      catch (error){
+        console.log("Error in fetching noftication")
+      }
+    }
+    fetchNotificationData()
+  },[userId])
+  console.log(notifications)
   return (
     <div className="flex h-screen bg-[#F3F9FB] overflow-hidden">
   {/* Sidebar */}
@@ -148,8 +164,12 @@ const EmployeeLayout: React.FC = () => {
         Welcome, {role.charAt(0).toUpperCase() + role.slice(1)}
       </h1>
       <div className="flex items-center gap-4">
-        <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
-          <Bell size={20} className="text-[#113F67]" />
+        <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
+        
+          onClick={() => setShowNotification((prev) => !prev)}
+        >
+          <Bell size={20} className="text-[#113F67]" 
+          />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
         </button>
         <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
@@ -168,6 +188,12 @@ const EmployeeLayout: React.FC = () => {
       </section>
     </div>
   </main>
+    {showNotification && (
+          <NotificationModal
+            onClose={() => setShowNotification(false)}
+            notifications={notifications}
+          />
+        )}
 </div>
 
   );

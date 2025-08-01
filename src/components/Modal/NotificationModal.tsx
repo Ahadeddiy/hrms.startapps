@@ -1,11 +1,10 @@
 import React from "react";
-import { X, Cake, UserPlus, CalendarCheck, PartyPopper, Bell } from "lucide-react"; // Add relevant icons
-
+import { X, Cake, UserPlus, CalendarCheck, PartyPopper, Bell } from "lucide-react";
 interface Notification {
   id: string;
   message: string;
   time: string;
-  type: "birthday" | "leave" | "new_user" | "anniversary" | "general"; // Add more if needed
+  type: "birthday" | "leave" | "new_user" | "anniversary" | "general";
 }
 
 interface NotificationModalProps {
