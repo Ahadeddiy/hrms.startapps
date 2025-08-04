@@ -22,15 +22,20 @@ import { logout } from "../../../feature/user/userSlice";
 import { RootState } from "../../../store/store";
 import profileImage from "../../../assets/userlogo.png";
 import { ChangePassword } from "../../ChangePassword/ChangePassoword";
+import NotificationModal from "../../Modal/NotificationModal";
+import { fetchNotifications } from "../../../api/notification";
 
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
   const role = user?.role?.toLowerCase() || "guest";
+  const id  = user?.userId
   const location = useLocation();
 
   const [pageTitle, setPageTitle] = useState("Dashboard");
+    const [showNotification, setShowNotification] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
     {}
@@ -67,6 +72,18 @@ const AdminLayout: React.FC = () => {
     }
   }, [location.pathname]);
 
+    useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const notifiactionData = await fetchNotifications(id);
+        setNotifications(notifiactionData);
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error);
+      }
+    };
+    fetchData();
+  }, [id]);
+
   const sidebarConfig: Record<
     string,
     { label: string; path: string; icon: React.ElementType }[]
@@ -88,42 +105,42 @@ const AdminLayout: React.FC = () => {
         path: "/admin/leave-requests",
         icon: CalendarCheck,
       },
-      {
-        label: "Payroll Management",
-        path: "/admin/payroll",
-        icon: HandCoins,
-        disabled: true,
-      },
-      {
-        label: "Document Management",
-        path: "/admin/documents",
-        icon: FileText,
-        disabled: true,
-      },
-      {
-        label: "Change Requests",
-        path: "/admin/change-requests",
-        icon: Repeat,
-        disabled: true,
-      },
-      {
-        label: "Reports",
-        path: "/admin/reports",
-        icon: BarChart2,
-        disabled: true,
-      },
-      {
-        label: "Approval History",
-        path: "/admin/approval-history",
-        icon: Clock,
-        disabled: true,
-      },
-      {
-        label: "Settings",
-        path: "/admin/settings",
-        icon: Settings,
-        disabled: true,
-      },
+      // {
+      //   label: "Payroll Management",
+      //   path: "/admin/payroll",
+      //   icon: HandCoins,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Document Management",
+      //   path: "/admin/documents",
+      //   icon: FileText,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Change Requests",
+      //   path: "/admin/change-requests",
+      //   icon: Repeat,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Reports",
+      //   path: "/admin/reports",
+      //   icon: BarChart2,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Approval History",
+      //   path: "/admin/approval-history",
+      //   icon: Clock,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Settings",
+      //   path: "/admin/settings",
+      //   icon: Settings,
+      //   disabled: true,
+      // },
       { label: "Profile", path: "/admin/profile", icon: User },
     ],
     admin: [
@@ -143,31 +160,31 @@ const AdminLayout: React.FC = () => {
         path: "/admin/leave-requests",
         icon: CalendarCheck,
       },
-      { label: "Payroll Management", path: "/admin/payroll", icon: HandCoins },
-      {
-        label: "Document Management",
-        path: "/admin/documents",
-        icon: FileText,
-        disabled: true,
-      },
-      {
-        label: "Change Requests",
-        path: "/admin/change-requests",
-        icon: Repeat,
-        disabled: true,
-      },
-      {
-        label: "Reports",
-        path: "/admin/reports",
-        icon: BarChart2,
-        disabled: true,
-      },
-      {
-        label: "Approval History",
-        path: "/admin/approval-history",
-        icon: Clock,
-        disabled: true,
-      },
+      // { label: "Payroll Management", path: "/admin/payroll", icon: HandCoins },
+      // {
+      //   label: "Document Management",
+      //   path: "/admin/documents",
+      //   icon: FileText,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Change Requests",
+      //   path: "/admin/change-requests",
+      //   icon: Repeat,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Reports",
+      //   path: "/admin/reports",
+      //   icon: BarChart2,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Approval History",
+      //   path: "/admin/approval-history",
+      //   icon: Clock,
+      //   disabled: true,
+      // },
       { label: "Profile", path: "/admin/profile", icon: User },
     ],
     hr: [
@@ -187,66 +204,66 @@ const AdminLayout: React.FC = () => {
         path: "/admin/leave-requests",
         icon: CalendarCheck,
       },
-      {
-        label: "Payroll Management",
-        path: "/admin/payroll",
-        icon: HandCoins,
-        disabled: true,
-      },
-      {
-        label: "Document Management",
-        path: "/admin/documents",
-        icon: FileText,
-        disabled: true,
-      },
-      {
-        label: "Change Requests",
-        path: "/admin/change-requests",
-        icon: Repeat,
-        disabled: true,
-      },
-      {
-        label: "Reports",
-        path: "/admin/reports",
-        icon: BarChart2,
-        disabled: true,
-      },
-      {
-        label: "Approval History",
-        path: "/admin/approval-history",
-        icon: Clock,
-        disabled: true,
-      },
-      {
-        label: "Settings",
-        path: "/admin/settings",
-        icon: Settings,
-        disabled: true,
-      },
+      // {
+      //   label: "Payroll Management",
+      //   path: "/admin/payroll",
+      //   icon: HandCoins,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Document Management",
+      //   path: "/admin/documents",
+      //   icon: FileText,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Change Requests",
+      //   path: "/admin/change-requests",
+      //   icon: Repeat,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Reports",
+      //   path: "/admin/reports",
+      //   icon: BarChart2,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Approval History",
+      //   path: "/admin/approval-history",
+      //   icon: Clock,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Settings",
+      //   path: "/admin/settings",
+      //   icon: Settings,
+      //   disabled: true,
+      // },
       { label: "Profile", path: "/admin/profile", icon: User },
     ],
     employee: [
       { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
       { label: "Attendance", path: "/attendance", icon: UserCheck },
       { label: "Leave Requests", path: "/leave-requests", icon: CalendarCheck },
-      {
-        label: "Document Upload",
-        path: "/documents",
-        icon: FileText,
-        disabled: true,
-      },
-      {
-        label: "Change Requests",
-        path: "/change-requests",
-        icon: Repeat,
-        disabled: true,
-      },
-      {
-        label: "Approval History",
-        path: "/approval-history",
-        icon: Clock,
-        disabled: true,
-      },
+      // {
+      //   label: "Document Upload",
+      //   path: "/documents",
+      //   icon: FileText,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Change Requests",
+      //   path: "/change-requests",
+      //   icon: Repeat,
+      //   disabled: true,
+      // },
+      // {
+      //   label: "Approval History",
+      //   path: "/approval-history",
+      //   icon: Clock,
+      //   disabled: true,
+      // },
       { label: "Profile", path: "/profile", icon: User },
     ],
   };
@@ -332,7 +349,8 @@ const AdminLayout: React.FC = () => {
               Welcome, {role.charAt(0).toUpperCase() + role.slice(1)}
             </h1>
             <div className="flex items-center gap-4">
-              <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
+              <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
+              onClick={() => setShowNotification((prev) => !prev)}>
                 <Bell size={20} className="text-[#113F67]" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
               </button>
@@ -394,6 +412,12 @@ const AdminLayout: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+            {showNotification && (
+        <NotificationModal
+          onClose={() => setShowNotification(false)}
+          notifications={notifications}
+        />
       )}
     </>
   );

@@ -72,7 +72,6 @@ const AppRouter = () => {
           element={
             <ProtectedRoutes allowedRoles={["Employee"]}>
               <EmployeeLayout />
-              {/* <EmployeeDashboard /> */}
             </ProtectedRoutes>
           }
         >
