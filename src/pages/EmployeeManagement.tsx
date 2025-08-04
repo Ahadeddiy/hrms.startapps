@@ -2,7 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchEmployees, deleteUser } from "../api/auth";
 import { Loader } from "../components/Loader/Loader";
-import { ListFilter, Eye, Edit, UserPlus, ChevronDown,Trash2,ArchiveRestore,Archive} from "lucide-react";
+import {
+  ListFilter,
+  Eye,
+  Edit,
+  UserPlus,
+  ChevronDown,
+  Trash2,
+  ArchiveRestore,
+  Archive,
+} from "lucide-react";
 import { Autocomplete } from "../components/common/AutoCompleteComp/AutoComplete";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -28,7 +37,7 @@ const EmployeeManagement = () => {
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-const [showArchived, setShowArchived] = useState(false);
+  const [showArchived, setShowArchived] = useState(false);
   const itemsPerPage = 10;
 
   const navigate = useNavigate();
@@ -54,16 +63,17 @@ const [showArchived, setShowArchived] = useState(false);
     "Actions",
   ];
 
-  // Utility to safely display text or fallback
- const capitalize = (str: string) =>
-  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  const capitalize = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
-const safeDisplay = (value?: string | null, capitalizeText = false): string => {
-  if (!value || value.trim() === "") return "N/A";
-  const trimmed = value.trim();
-  return capitalizeText ? capitalize(trimmed) : trimmed;
-};
-
+  const safeDisplay = (
+    value?: string | null,
+    capitalizeText = false
+  ): string => {
+    if (!value || value.trim() === "") return "N/A";
+    const trimmed = value.trim();
+    return capitalizeText ? capitalize(trimmed) : trimmed;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,7 +101,7 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
   }, []);
 
   useEffect(() => {
-    setCurrentPage(1); // Reset page to 1 when filters change
+    setCurrentPage(1);
   }, [filters]);
 
   const openModal = (userId: string) => {
@@ -126,15 +136,21 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
     navigate(`/admin/employee/${id}`);
   };
 
-  // Filter employees safely with null/empty checks
   let filteredEmployees = employeeData.filter((emp) => {
     return (
       (!filters.designation ||
-        (emp.designation ?? "").toLowerCase().includes(filters.designation.toLowerCase())) &&
-      (!filters.employmentType || emp.employmentType === filters.employmentType) &&
+        (emp.designation ?? "")
+          .toLowerCase()
+          .includes(filters.designation.toLowerCase())) &&
+      (!filters.employmentType ||
+        emp.employmentType === filters.employmentType) &&
       (!filters.gender || (emp.gender ?? "") === filters.gender) &&
-      (!filters.email || (emp.email ?? "").toLowerCase().includes(filters.email.toLowerCase())) &&
-      (!filters.joiningDate || emp.joiningDate?.slice(0, 10) === filters.joiningDate)
+      (!filters.email ||
+        (emp.email ?? "")
+          .toLowerCase()
+          .includes(filters.email.toLowerCase())) &&
+      (!filters.joiningDate ||
+        emp.joiningDate?.slice(0, 10) === filters.joiningDate)
     );
   });
 
@@ -142,12 +158,14 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
   if (filters.sortOrder === "latest") {
     filteredEmployees.sort(
       (a, b) =>
-        new Date(b.joiningDate ?? "").getTime() - new Date(a.joiningDate ?? "").getTime()
+        new Date(b.joiningDate ?? "").getTime() -
+        new Date(a.joiningDate ?? "").getTime()
     );
   } else if (filters.sortOrder === "oldest") {
     filteredEmployees.sort(
       (a, b) =>
-        new Date(a.joiningDate ?? "").getTime() - new Date(b.joiningDate ?? "").getTime()
+        new Date(a.joiningDate ?? "").getTime() -
+        new Date(b.joiningDate ?? "").getTime()
     );
   }
 
@@ -186,7 +204,10 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
           ]}
           placeholder="Search by ID, Name, Designation, DOJ..."
           displayValue={(emp) => {
-            const name = `${safeDisplay(emp.firstName)} ${safeDisplay(emp.lastName)}`.trim() || "No Name";
+            const name =
+              `${safeDisplay(emp.firstName)} ${safeDisplay(
+                emp.lastName
+              )}`.trim() || "No Name";
             const designation = safeDisplay(emp.designation);
             const employmentType = safeDisplay(emp.employmentType);
             const joiningDate = emp.joiningDate
@@ -210,24 +231,34 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
               <div className="absolute right-0 mt-2 bg-white shadow-lg border rounded w-64 z-50">
                 <div className="p-4 space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Designation</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Designation
+                    </label>
                     <input
                       type="text"
                       className="w-full border px-2 py-1 rounded"
                       value={filters.designation}
                       onChange={(e) =>
-                        setFilters((prev) => ({ ...prev, designation: e.target.value }))
+                        setFilters((prev) => ({
+                          ...prev,
+                          designation: e.target.value,
+                        }))
                       }
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Employment Type</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Employment Type
+                    </label>
                     <select
                       className="w-full border px-2 py-1 rounded"
                       value={filters.employmentType}
                       onChange={(e) =>
-                        setFilters((prev) => ({ ...prev, employmentType: e.target.value }))
+                        setFilters((prev) => ({
+                          ...prev,
+                          employmentType: e.target.value,
+                        }))
                       }
                     >
                       <option value="">All</option>
@@ -237,12 +268,17 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Gender
+                    </label>
                     <select
                       className="w-full border px-2 py-1 rounded"
                       value={filters.gender}
                       onChange={(e) =>
-                        setFilters((prev) => ({ ...prev, gender: e.target.value }))
+                        setFilters((prev) => ({
+                          ...prev,
+                          gender: e.target.value,
+                        }))
                       }
                     >
                       <option value="">All</option>
@@ -253,36 +289,51 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Joining Date</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Joining Date
+                    </label>
                     <input
                       type="date"
                       className="w-full border px-2 py-1 rounded"
                       value={filters.joiningDate}
                       onChange={(e) =>
-                        setFilters((prev) => ({ ...prev, joiningDate: e.target.value }))
+                        setFilters((prev) => ({
+                          ...prev,
+                          joiningDate: e.target.value,
+                        }))
                       }
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
                     <input
                       type="text"
                       className="w-full border px-2 py-1 rounded"
                       value={filters.email}
                       onChange={(e) =>
-                        setFilters((prev) => ({ ...prev, email: e.target.value }))
+                        setFilters((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
                       }
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Sort by Joining Date</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Sort by Joining Date
+                    </label>
                     <select
                       className="w-full border px-2 py-1 rounded"
                       value={filters.sortOrder}
                       onChange={(e) =>
-                        setFilters((prev) => ({ ...prev, sortOrder: e.target.value }))
+                        setFilters((prev) => ({
+                          ...prev,
+                          sortOrder: e.target.value,
+                        }))
                       }
                     >
                       <option value="">Default</option>
@@ -325,28 +376,32 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
             Create User <UserPlus size={18} />
           </button>
 
-      { role==="SuperAdmin" ? (
-        <button
-            onClick={() => setShowArchived(prev => !prev)}
-            className="bg-[#226597] text-white px-4 py-2 rounded-md cursor-pointer font-semibold flex items-center gap-2 hover:bg-[#1c4c7a]"
-            title="Archive Soft Deleted User"
-          >
-            {
-              !showArchived?(
-                <Archive size={25}/>
-              ):(
-
-                <ArchiveRestore size={18}/>
-              )
-
-            }
-          </button>
-      ):<></> }     
+          {role === "SuperAdmin" ? (
+            <button
+              onClick={() => setShowArchived((prev) => !prev)}
+              className="bg-[#226597] text-white px-4 py-2 rounded-md cursor-pointer font-semibold flex items-center gap-2 hover:bg-[#1c4c7a]"
+              title="Archive Soft Deleted User"
+            >
+              {!showArchived ? (
+                <Archive size={25} />
+              ) : (
+                <ArchiveRestore size={18} />
+              )}
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
 
       <table className={`w-full text-sm text-left`}>
-        <thead className={`${!showArchived?'bg-[#113F67] text-white':'bg-[#071b2c] text-gray-200'} uppercase font-medium text-sm`}>
+        <thead
+          className={`${
+            !showArchived
+              ? "bg-[#113F67] text-white"
+              : "bg-[#071b2c] text-gray-200"
+          } uppercase font-medium text-sm`}
+        >
           <tr>
             {headers.map((header) => (
               <th key={header} className="px-4 py-3 whitespace-nowrap">
@@ -357,17 +412,35 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
         </thead>
         <tbody>
           {paginatedFiltered.map((emp, index) => (
-            <tr key={emp._id} className={`${index % 2 === 0 ? (!showArchived ? "bg-white text-black" : "bg-gray-100 text-gray-500") : "bg-[#F3F9FB]"}`}>
+            <tr
+              key={emp._id}
+              className={`${
+                index % 2 === 0
+                  ? !showArchived
+                    ? "bg-white text-black"
+                    : "bg-gray-100 text-gray-500"
+                  : "bg-[#F3F9FB]"
+              }`}
+            >
               <td className="px-4 py-3 font-medium">
-                {safeDisplay(emp.firstName,true)} {safeDisplay(emp.lastName,true)}
+                {safeDisplay(emp.firstName, true)}{" "}
+                {safeDisplay(emp.lastName, true)}
               </td>
-              <td className="px-4 py-3">{safeDisplay(emp.email,true)}</td>
-              <td className="px-4 py-3">{safeDisplay(emp.designation,true)}</td>
-              <td className="px-4 py-3">{emp.joiningDate ? new Date(emp.joiningDate).toLocaleDateString("en-GB") : "N/A"}</td>
-              <td className="px-4 py-3">{safeDisplay(emp.employmentType,true)}</td>
-              <td className="px-4 py-3">{safeDisplay(emp.gender,true)}</td>
+              <td className="px-4 py-3">{safeDisplay(emp.email, true)}</td>
+              <td className="px-4 py-3">
+                {safeDisplay(emp.designation, true)}
+              </td>
+              <td className="px-4 py-3">
+                {emp.joiningDate
+                  ? new Date(emp.joiningDate).toLocaleDateString("en-GB")
+                  : "N/A"}
+              </td>
+              <td className="px-4 py-3">
+                {safeDisplay(emp.employmentType, true)}
+              </td>
+              <td className="px-4 py-3">{safeDisplay(emp.gender, true)}</td>
               <td className="px-4 py-3 flex gap-2">
-                <button 
+                <button
                   onClick={() => handleViewProfile(emp._id)}
                   className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
                 >
@@ -391,7 +464,7 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
                     onClick={() => handleRequestDelete(emp._id)}
                     className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
                   >
-                  <Trash2 size={18} color="#113F67" />
+                    <Trash2 size={18} color="#113F67" />
                   </button>
                 )}
               </td>
@@ -407,7 +480,6 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
         </div>
       )}
 
-      {/* Pagination controls only if results */}
       {filteredEmployees.length > 0 && (
         <div className="flex justify-between mt-6 items-center">
           <button
@@ -423,7 +495,9 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
           </span>
 
           <button
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
             disabled={currentPage === totalPages}
             className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md hover:bg-[#1c4c7a] disabled:opacity-0"
           >
@@ -432,10 +506,11 @@ const safeDisplay = (value?: string | null, capitalizeText = false): string => {
         </div>
       )}
 
-      {/* Delete Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0  backdrop-blur-sm
-bg-opacity-70 flex items-center justify-center z-50">
+        <div
+          className="fixed inset-0  backdrop-blur-sm
+bg-opacity-70 flex items-center justify-center z-50"
+        >
           <div className="bg-white p-6 rounded shadow-md w-80">
             <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
             <p>Are you sure you want to delete this user?</p>
