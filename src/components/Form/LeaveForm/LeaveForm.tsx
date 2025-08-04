@@ -42,10 +42,10 @@ const LeaveRequestForm: React.FC = () => {
       await applyLeave(data);
       toast.success("Leave request submitted successfully!");
       reset();
-      if(role==="HR"||"Admin"){
+      if(role==="HR"||role==="Admin"){
         navigate("/admin/leave-requests");
       }
-      else{
+      else if (role === "employee"){
         navigate("/employee/leaves");
       }
       
