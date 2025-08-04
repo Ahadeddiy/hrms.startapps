@@ -84,10 +84,10 @@ const AdminDashboard = () => {
             disabled: false,
           },
           {
-            label: "Payrolls",
-            value: "In Progress",
-            icon: <DollarSign size={40} className="text-white" />,
-            disabled: true,
+            label: "Present",
+            value: "6",
+            icon: <Users size={40} className="text-white" />,
+            disabled: false,
           },
         ].map((card, idx) => (
           <div

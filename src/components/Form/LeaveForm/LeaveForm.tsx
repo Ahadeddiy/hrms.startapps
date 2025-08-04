@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { applyLeave } from "../../../api/leave";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 interface LeaveRequest {
   leaveType: "sick" | "casual";
@@ -14,7 +15,8 @@ interface LeaveRequest {
 
 const LeaveRequestForm: React.FC = () => {
   const navigate = useNavigate();
-
+  const user = useSelector((state: RootState) => state.user.user);
+  const role = user?.role
   const {
     register,
     handleSubmit,
@@ -40,7 +42,13 @@ const LeaveRequestForm: React.FC = () => {
       await applyLeave(data);
       toast.success("Leave request submitted successfully!");
       reset();
-      navigate("/employee/leaves");
+      if(role==="HR"||"Admin"){
+        navigate("/admin/leave-requests");
+      }
+      else{
+        navigate("/employee/leaves");
+      }
+      
     } catch (error: any) {
       console.error("Leave submission error:", error);
       toast.error(error?.response?.data?.message || "Submission failed");

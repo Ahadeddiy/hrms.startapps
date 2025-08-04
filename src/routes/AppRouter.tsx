@@ -62,6 +62,7 @@ const AppRouter = () => {
           <Route path="profile" element={<Profile />} />
           <Route path="payroll" element={<Payroll />} />
           <Route path="reports" element={<Reports />} />
+          <Route path="/admin/leave-apply" element={<LeaveRequestForm />} />
           <Route path="/admin/employee/:id" element={<Profile />} />
           <Route path="/admin/employee/edit/:id" element={<Profile />} />
           </Route>

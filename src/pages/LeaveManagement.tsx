@@ -3,6 +3,9 @@ import { MoreVertical } from "lucide-react";
 import { getLeaves } from "../api/leave";
 import { LeaveEntry } from "../api/leave";
 import { updateStatus as updateLeaveStatusAPI } from "../api/leave";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 const leaveHeaders: string[] = [
   "Employee Name",
@@ -31,7 +34,9 @@ const getStatusStyle = (status: LeaveEntry["status"]) => {
 const LeaveManagement: React.FC = () => {
   const [leaves, setLeaves] = useState<LeaveEntry[]>([]);
   const [dropdownIndex, setDropdownIndex] = useState<number | null>(null);
-
+  const user = useSelector((state: RootState) => state.user);
+  const role = user?.role
+const navigate = useNavigate()
   useEffect(() => {
     const fetchLeaves = async () => {
       const data = await getLeaves();
@@ -64,8 +69,18 @@ const LeaveManagement: React.FC = () => {
   const formatDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString("en-IN");
 
+  const handleNavigateLeaveForm = () =>{
+        navigate("/admin/leave-apply");
+  }
+
   return (
     <div className="overflow-x-auto p-2">
+          <button
+      onClick={handleNavigateLeaveForm}
+      className="bg-[#226597] hover:bg-[#113F67] cursor-pointer text-white px-6 py-2 rounded-md text-sm font-medium shadow transition"
+    >
+      + Request Leave
+    </button>
   {/*   <h2 className="text-xl font-bold text-[#113F67] mt-2">Leave Requests</h2> */}
 
   <table className="w-full text-sm text-left text-[#113F67] mt-1.5">

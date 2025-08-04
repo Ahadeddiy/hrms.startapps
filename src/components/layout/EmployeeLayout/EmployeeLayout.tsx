@@ -37,28 +37,27 @@ const EmployeeLayout: React.FC = () => {
     { label: "Dashboard", path: "/employee/", icon: LayoutDashboard },
     { label: "Attendance", path: "/employee/attendance", icon: UserCheck },
     {
-      label: "Leave Requests",
-      path: "/employee/leave-requests",
+      label: "Apply Leaves",
+      path: "/employee/leaves",
       icon: CalendarCheck,
     },
-    {
-      label: "Document Upload",
-      path: "/employee/documents",
-      icon: FileText,
-      disabled: true,
-    },
-    {
-      label: "Change Requests",
-      path: "/employee/change-requests",
-      icon: Repeat,
-      disabled: true,
-    },
-    {
-      label: "Approval History",
-      path: "/employee/approval-history",
-      icon: Clock,
-      disabled: true,
-    },
+    // {
+    //   label: "Document Upload",
+    //   icon: FileText,
+    //   disabled: true,
+    // },
+    // {
+    //   label: "Change Requests",
+    //   path: "/employee/change-requests",
+    //   icon: Repeat,
+    //   disabled: true,
+    // },
+    // {
+    //   label: "Approval History",
+    //   path: "/employee/approval-history",
+    //   icon: Clock,
+    //   disabled: true,
+    // },
     { label: "Profile", path: "/employee/profile", icon: User },
   ];
 
