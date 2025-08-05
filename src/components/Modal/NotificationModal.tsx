@@ -67,8 +67,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       <div className="flex-1">
         <p className="text-sm font-medium text-[#113F67]">{n.message}</p>
         <p className="text-xs text-gray-500">
-          {/* {formatDistanceToNow(new Date(n.time), { addSuffix: true })} */}
-          {n.time}
+          {n.createdAt}
         </p>
         {!n.isRead && (
           <button

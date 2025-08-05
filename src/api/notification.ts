@@ -1,5 +1,4 @@
 import API from "./auth";
-
 export const fetchNotifications = async (userId:string) => {
     console.log(userId)
     try{
@@ -13,8 +12,6 @@ export const fetchNotifications = async (userId:string) => {
     }
 
 }
-
-
 export const markNotificationAsRead = async (notificationId: string) => {
   try {
     const res = await API.patch(`/api/notifications/read/${notificationId}`);
@@ -24,7 +21,6 @@ export const markNotificationAsRead = async (notificationId: string) => {
     throw error;
   }
 };
-
 export const markAllNotificationsAsRead = async (userId) => {
   try {
     const res = await API.patch(`/api/notifications/${userId}/read-all`);

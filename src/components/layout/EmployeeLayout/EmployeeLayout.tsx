@@ -249,7 +249,7 @@ const EmployeeLayout: React.FC = () => {
           </div>
         </div>
       )}
-                  {showNotification && (
+        {showNotification && (
               <NotificationModal
                 onClose={() => setShowNotification(false)}
                 notifications={notifications}

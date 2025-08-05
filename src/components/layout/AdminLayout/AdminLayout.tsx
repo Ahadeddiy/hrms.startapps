@@ -26,7 +26,6 @@ import NotificationModal from "../../Modal/NotificationModal";
 import { fetchNotifications } from "../../../api/notification";
 import { markAllNotificationsAsRead,markNotificationAsRead,deleteNotification } from "../../../api/notification";
 
-
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,13 +33,10 @@ const AdminLayout: React.FC = () => {
   const role = user?.role?.toLowerCase() || "guest";
   const id  = user?.userId
   const location = useLocation();
-
   const [pageTitle, setPageTitle] = useState("Dashboard");
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-
-
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
     {}
   );
