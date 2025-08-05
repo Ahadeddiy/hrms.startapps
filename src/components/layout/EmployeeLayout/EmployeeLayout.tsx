@@ -94,6 +94,11 @@ const EmployeeLayout: React.FC = () => {
             </div>
           </div>
 
+
+
+
+          
+
           {/* Navigation */}
           <nav className="flex flex-col gap-3 flex-grow">
             {linksToShow.map(({ label, path, icon: Icon }) =>

@@ -461,6 +461,33 @@
 
 // export default LeaveManagement;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useEffect, useState, useRef } from "react";
 import { MoreVertical, ListFilter, ChevronDown } from "lucide-react";
 import { getLeaves, updateStatus as updateLeaveStatusAPI } from "../api/leave";
@@ -543,7 +570,6 @@ const LeaveManagement: React.FC = () => {
       );
     }
 
-   
     if (searchQuery.trim() !== "") {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(

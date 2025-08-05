@@ -15,6 +15,12 @@ const Profile: React.FC = () => {
   const { id } = useParams();
   const userId = id || user?.userId;
 
+
+
+
+
+
+  
   useEffect(() => {
     API.get(`/api/users/employee/${userId}`)
       .then((res) => setProfile(res.data))
