@@ -6,14 +6,14 @@ import {
   CalendarCheck,
   PartyPopper,
   Bell,
-  Check,
   Trash2,
 } from "lucide-react";
+// import { formatDistanceToNow } from "date-fns"; // Optional for relative time
 
 interface Notification {
   id: string;
   message: string;
-  time: string;
+  time: string; // You can convert to Date if needed
   type: "birthday" | "leave" | "new_user" | "anniversary" | "general";
   isRead: boolean;
 }
@@ -48,12 +48,52 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   onDelete,
   onMarkAllAsRead,
 }) => {
+  const unread = notifications.filter((n) => !n.isRead);
+  const read = notifications.filter((n) => n.isRead);
+
+  const renderNotification = (n: Notification) => (
+    <div
+      key={n.id}
+      className={`px-4 py-3 border-b border-gray-100 hover:bg-gray-50 flex gap-3 items-start ${
+        n.isRead ? "opacity-60" : "bg-blue-50"
+      }`}
+    >
+      <div className="pt-1 relative">
+        {getIconForType(n.type)}
+        {!n.isRead && (
+          <span className="absolute top-0 right-0 w-2 h-2 bg-blue-500 rounded-full" />
+        )}
+      </div>
+      <div className="flex-1">
+        <p className="text-sm font-medium text-[#113F67]">{n.message}</p>
+        <p className="text-xs text-gray-500">
+          {n.createdAt}
+        </p>
+        {!n.isRead && (
+          <button
+            onClick={() => onMarkAsRead(n._id)}
+            className="text-xs text-blue-600 hover:underline mt-1"
+          >
+            Mark as read
+          </button>
+        )}
+      </div>
+      <button
+        onClick={() => onDelete(n._id)}
+        className="text-gray-400 hover:text-red-500"
+      >
+        <Trash2 size={16} />
+      </button>
+    </div>
+  );
+  console.log(notifications)
+
   return (
     <div className="fixed top-16 right-6 z-50 w-80 bg-white rounded-xl shadow-xl border border-gray-300">
       <div className="flex justify-between items-center px-4 py-2 border-b border-gray-200">
         <h2 className="font-bold text-[#113F67]">Notifications</h2>
         <div className="flex items-center gap-3">
-          {notifications.some((n) => !n.isRead) && (
+          {unread.length > 0 && (
             <button
               onClick={onMarkAllAsRead}
               className="text-xs text-blue-600 hover:underline"
@@ -68,41 +108,29 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       </div>
 
       <div className="max-h-96 overflow-y-auto">
-        {notifications.length > 0 ? (
-          notifications.map((n) => (
-            <div
-              key={n.id}
-              className={`px-4 py-3 border-b border-gray-100 hover:bg-gray-50 flex gap-3 items-start ${
-                n.isRead ? "opacity-60" : "bg-blue-50"
-              }`}
-            >
-              <div className="pt-1">{getIconForType(n.type)}</div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-[#113F67]">
-                  {n.message}
-                </p>
-                <p className="text-xs text-gray-500">{n.time}</p>
-                {!n.isRead && (
-                  <button
-                    onClick={() => onMarkAsRead(n.id)}
-                    className="text-xs text-blue-600 hover:underline mt-1"
-                  >
-                    Mark as read
-                  </button>
-                )}
-              </div>
-              <button
-                onClick={() => onDelete(n.id)}
-                className="text-gray-400 hover:text-red-500"
-              >
-                <Trash2 size={16} />
-              </button>
-            </div>
-          ))
-        ) : (
+        {notifications.length === 0 ? (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
-            No new notifications
+            No notifications yet
           </div>
+        ) : (
+          <>
+            {unread.length > 0 && (
+              <>
+                <p className="px-4 py-1 text-xs font-semibold text-gray-500">
+                  New
+                </p>
+                {unread.map(renderNotification)}
+              </>
+            )}
+            {read.length > 0 && (
+              <>
+                <p className="px-4 py-1 text-xs font-semibold text-gray-400 mt-2">
+                  Earlier
+                </p>
+                {read.map(renderNotification)}
+              </>
+            )}
+          </>
         )}
       </div>
     </div>
