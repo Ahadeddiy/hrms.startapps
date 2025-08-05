@@ -7,6 +7,37 @@ import { Edit, X } from "lucide-react";
 import { useParams } from "react-router-dom";
 const editableFields = ["firstName", "lastName", "phone"];
 const maskedFields = ["adharNumber", "panNumber", "accountNumber", "ifscCode"];
+const basicEditableFields = [
+  "firstName",
+  "lastName",
+  "phone",
+  "dob",
+  "gender",
+  "address",
+  "city",
+  "state",
+  "zipCode",
+  "country",
+  "joiningDate",
+  "designation",
+  "department",
+  "employmentType",
+];
+
+const fullEditableFields = [
+  ...basicEditableFields,
+  "bankName",
+  "accountNumber",
+  "ifscCode",
+  "branchName",
+  "accountHolderName",
+  "adharNumber",
+  "panNumber",
+  "qualification",
+  "institution",
+  "yearOfPassing",
+  "grade",
+];
 
 const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -14,6 +45,8 @@ const Profile: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const { id } = useParams();
   const userId = id || user?.userId;
+const userRole = user?.role;
+const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
 
   useEffect(() => {
     API.get(`/api/users/employee/${userId}`)
@@ -68,7 +101,8 @@ const Profile: React.FC = () => {
         designation: profile.designation,
         department: profile.department,
         employmentType: profile.employmentType,
-        leaves: profile.leaves,
+        // leaves: profile.leaves,
+        // leaves: profile.leaves,
       },
       bankDetails: {
         bankName: profile.bankName,
@@ -102,7 +136,11 @@ const Profile: React.FC = () => {
     type: string = "text",
     maskType?: string
   ) => {
-    const isEditable = isEditing && editableFields.includes(name);
+    
+    const isEditable =
+  isEditing &&
+  (canEditAll ? fullEditableFields.includes(name) : basicEditableFields.includes(name));
+
     const isMasked = maskedFields.includes(name);
     const isDateField = type === "date";
     const value = profile[name];
@@ -134,6 +172,7 @@ const Profile: React.FC = () => {
     <div className="max-w-8xl mx-auto px-6 py-2 bg-white rounded-2xl">
       <div className="flex justify-end items-center pb-2">
         <div className="flex items-center w-full justify-between bg-[#113F67] p-4 rounded-lg shadow-md hover:shadow-lg transition">
+
           <div className="flex  items-center gap-4">
             <img
               src={
@@ -146,8 +185,7 @@ const Profile: React.FC = () => {
                   : "/default-avatar.png"
               }
               alt="Profile"
-                className="w-16 h-16 md:w-15 md:h-15 sm:w-10 sm:h-10 rounded-full border-4 border-gray-200"
-
+              className="w-24 h-24 rounded-full border-4 border-gray-200"
             />
             <div className="flex flex-col gap-1 items-start">
               <h3 className="md:text-2xl font-semibold text-white">
@@ -157,6 +195,7 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
+       
           <button
             type="button"
             onClick={() => setIsEditing((prev) => !prev)}

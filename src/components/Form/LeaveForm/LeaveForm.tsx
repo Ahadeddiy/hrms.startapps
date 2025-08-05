@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 interface LeaveRequest {
-   leaveType: "sick" | "casual" | "work";
+  leaveType: "sick" | "casual" | "work" ;
   dayType: "fullday" | "halfday";
   startDate: string;
   endDate?: string;
@@ -75,7 +75,7 @@ const LeaveRequestForm: React.FC = () => {
             <option value="">Select Type</option>
             <option value="sick">Sick Leave</option>
             <option value="casual">Casual Leave</option>
-            <option value="work">Work From Home</option>
+             <option value="work">Work from Home</option>
           </select>
           {errors.leaveType && (
             <p className="text-red-500 text-sm mt-1">

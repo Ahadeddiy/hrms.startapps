@@ -229,6 +229,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
             </label>
             <input
               {...register(`basicDetails.${field.name}` as const, {
+                 required: !readOnly ? "This field is required" : false,
                 pattern: field.pattern
                   ? { value: field.pattern, message: field.patternMsg }
                   : undefined,
@@ -246,109 +247,112 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
           </div>
         ))}
 
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Joining Date
-          </label>
-          <input
-            type="date"
-            {...register("basicDetails.joiningDate")}
-            disabled={readOnly}
-            className={inputClass}
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Department
-          </label>
-          <select
-            {...register("basicDetails.department")}
-            disabled={readOnly}
-            className={inputClass}
-          >
-            <option value="">Select Department</option>
-            <option value="engineering">Engineering</option>
-            <option value="hr">HR</option>
-            <option value="sales">Sales</option>
-          </select>
-          <div className="h-5 mt-1">
-            {!readOnly && errors.basicDetails?.department?.message && (
-              <p className="text-red-500 text-sm">
-                {errors.basicDetails.department.message}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Designation
-          </label>
-          <select
-            {...register("basicDetails.designation")}
-            disabled={readOnly || !selectedDepartment}
-            className={inputClass}
-          >
-            <option value="">Select Designation</option>
-            {designationOptions.map((designation) => (
-              <option key={designation} value={designation}>
-                {designation}
-              </option>
-            ))}
-          </select>
-          <div className="h-5 mt-1">
-            {!readOnly && errors.basicDetails?.designation?.message && (
-              <p className="text-red-500 text-sm">
-                {errors.basicDetails.designation.message}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Employment Type
-          </label>
-          <select
-            {...register("basicDetails.employmentType")}
-            disabled={readOnly}
-            className={inputClass}
-          >
-            <option value="">Select Type</option>
-            <option value="full-time">Full-time</option>
-            <option value="intern">Intern</option>
-            <option value="contract">Contract</option>
-          </select>
-        </div>
-
-        {!readOnly && (
-          <div className="md:col-span-3">
-            <label className="text-sm font-medium text-gray-700 mb-1">
-              Upload Profile Image
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="block w-full text-sm cursor-pointer text-gray-700 file:mr-4 file:py-2 file:px-4 file:border file:rounded file:border-gray-300 file:bg-white hover:file:bg-gray-100"
-            />
-            {previewUrl && (
-              <img
-                src={previewUrl}
-                alt="Profile Preview"
-                className="mt-2 w-24 h-24 object-cover rounded-full border"
-              />
-            )}
-            <button
-              type="button"
-              onClick={handleUpload}
-              className="mt-2 bg-[#226597] hover:bg-[#1c4c7a] cursor-pointer text-white py-1.5 px-4 rounded-md"
-            >
-              {isLoading ? <Loader /> : "Upload"}
-            </button>
-          </div>
+      {/* Joining Date */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700 mb-1">Joining Date</label>
+        <input
+          type="date"
+          {...register("basicDetails.joiningDate", {required: !readOnly ? "Joining Date is required" : false})}
+          disabled={readOnly}
+          className={inputClass}
+        />
+         <div className="h-5 mt-1">
+        {!readOnly && errors.basicDetails?.joiningDate?.message && (
+          <p className="text-red-500 text-sm">{errors.basicDetails.joiningDate.message}</p>
         )}
+        </div>
+      </div>
+
+      {/* Department */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700 mb-1">Department</label>
+        <select
+          {...register("basicDetails.department",{ required: !readOnly ? "Department is required" : false,})}
+          disabled={readOnly}
+          className={inputClass}
+        >
+          <option value="">Select Department</option>
+          <option value="engineering">Engineering</option>
+          <option value="hr">HR</option>
+          <option value="sales">Sales</option>
+        </select>
+         <div className="h-5 mt-1">
+        {!readOnly && errors.basicDetails?.department?.message && (
+          <p className="text-red-500 text-sm">{errors.basicDetails.department.message}</p>
+        )}
+        </div>
+      </div>
+
+      {/* Designation */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700 mb-1">Designation</label>
+        <select
+          {...register("basicDetails.designation",{ required: !readOnly ? "Designation is required" : false,})}
+          disabled={readOnly || !selectedDepartment}
+          className={inputClass}
+        >
+          <option value="">Select Designation</option>
+          {designationOptions.map((designation) => (
+            <option key={designation} value={designation}>
+              {designation}
+            </option>
+          ))}
+        </select>
+              <div className="h-5 mt-1">
+        {!readOnly && errors.basicDetails?.designation?.message && (
+          <p className="text-red-500 text-sm">{errors.basicDetails.designation.message}</p>
+        )}
+        </div>
+      </div>
+
+      {/* Employment Type */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-700 mb-1">Employment Type</label>
+        <select
+          {...register("basicDetails.employmentType",{ required: !readOnly ? "Employee Type is required" : false})}
+          disabled={readOnly}
+          className={inputClass}
+        >
+          <option value="">Select Type</option>
+          <option value="full-time">Full-time</option>
+          <option value="intern">Intern</option>
+          <option value="contract">Contract</option>
+        </select>
+         <div className="h-5 mt-1">
+        {!readOnly && errors.basicDetails?.employmentType?.message && (
+          <p className="text-red-500 text-sm">{errors.basicDetails.employmentType.message}</p>
+        )}
+        </div>
+      </div>
+
+      {/* Upload Profile Image */}
+      {!readOnly && (
+        <div className="md:col-span-3">
+          <label className="text-sm font-medium text-gray-700 mb-1">Upload Profile Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="block w-full text-sm cursor-pointer text-gray-700 file:mr-4 file:py-2 file:px-4 file:border file:rounded file:border-gray-300 file:bg-white hover:file:bg-gray-100"
+            required
+          />
+          {previewUrl && (
+            <img
+              src={previewUrl}
+              alt="Profile Preview"
+              className="mt-2 w-24 h-24 object-cover rounded-full border"
+            />
+          )}
+          <button
+            type="button"
+            onClick={handleUpload}
+            className="mt-2 bg-[#226597] hover:bg-[#1c4c7a] cursor-pointer text-white py-1.5 px-4 rounded-md"
+          >
+            {isLoading ? <Loader /> : "Upload"}
+          
+          </button>
+        </div>
+      )}
       </div>
     </>
   );
