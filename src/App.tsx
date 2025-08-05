@@ -5,7 +5,6 @@ import AppRouter from './routes/AppRouter';
 function App() {
   return (
     <>
-      {/* Your routes/components */}
       <AppRouter />
       <ToastContainer autoClose={700}/>
     </>

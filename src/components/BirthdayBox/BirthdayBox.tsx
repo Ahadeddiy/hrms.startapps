@@ -16,7 +16,7 @@ const BirthdayBox: React.FC<BirthdayBoxProps> = ({ birthdays, onSendWish }) => {
 
   return (
     <div className="space-y-6 w-full h-full bg-gray-300 py-2 px-5 shadow-md rounded-md border border-[#dbe9f1] relative">
-      {/* Header with i button */}
+     
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-[#113F67]">Birthdays</h2>
         <div className="relative">
@@ -29,13 +29,13 @@ const BirthdayBox: React.FC<BirthdayBoxProps> = ({ birthdays, onSendWish }) => {
           </button>
           {showInfo && (
             <div className="absolute right-0 mt-2 w-52 text-sm text-gray-700 bg-white border border-gray-300 shadow-md rounded p-2 z-50">
-              🚧 This feature is in progress.
+               This feature is in progress.
             </div>
           )}
         </div>
       </div>
 
-      {/* Birthday List */}
+      
       {birthdays.length === 0 ? (
         <p className="text-gray-600 italic">No upcoming birthdays.</p>
       ) : (

@@ -15,12 +15,6 @@ const Profile: React.FC = () => {
   const { id } = useParams();
   const userId = id || user?.userId;
 
-
-
-
-
-
-  
   useEffect(() => {
     API.get(`/api/users/employee/${userId}`)
       .then((res) => setProfile(res.data))
@@ -140,39 +134,44 @@ const Profile: React.FC = () => {
     <div className="max-w-8xl mx-auto px-6 py-2 bg-white rounded-2xl">
       <div className="flex justify-end items-center pb-2">
         <div className="flex items-center w-full justify-between bg-[#113F67] p-4 rounded-lg shadow-md hover:shadow-lg transition">
-      <div className="flex  items-center gap-4">
-        <img
-  src={
-    profile.profileImage
-      ? profile.profileImage.startsWith("http")
-        ? profile.profileImage
-        : `${import.meta.env.VITE_APP_BASE_URL}/${profile.profileImage}`
-      : "/default-avatar.png"
-  }
-  alt="Profile"
-  className="w-24 h-24 rounded-full border-4 border-gray-200"
-/>
-<div className="flex flex-col gap-1 items-start">
-          <h3 className="md:text-2xl font-semibold text-white">{profile?.firstName + " " + profile?.lastName}</h3>
-          <p className="md:text-lg text-gray-300">{profile?.designation}</p>
-        </div>
-</div>
-        
-         <button
-          type="button"
-          onClick={() => setIsEditing((prev) => !prev)}
-          className="text-sm flex gap-2 items-center cursor-pointer font-medium text-white px-4 py-2 rounded-md transition hover:text-gray-100"
-        >
-          {isEditing ? <X/> : <Edit />}
-        </button>
-      </div>
+          <div className="flex  items-center gap-4">
+            <img
+              src={
+                profile.profileImage
+                  ? profile.profileImage.startsWith("http")
+                    ? profile.profileImage
+                    : `${import.meta.env.VITE_APP_BASE_URL}/${
+                        profile.profileImage
+                      }`
+                  : "/default-avatar.png"
+              }
+              alt="Profile"
+                className="w-16 h-16 md:w-15 md:h-15 sm:w-10 sm:h-10 rounded-full border-4 border-gray-200"
 
-       
+            />
+            <div className="flex flex-col gap-1 items-start">
+              <h3 className="md:text-2xl font-semibold text-white">
+                {profile?.firstName + " " + profile?.lastName}
+              </h3>
+              <p className="md:text-lg text-gray-300">{profile?.designation}</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsEditing((prev) => !prev)}
+            className="text-sm flex gap-2 items-center cursor-pointer font-medium text-white px-4 py-2 rounded-md transition hover:text-gray-100"
+          >
+            {isEditing ? <X /> : <Edit />}
+          </button>
+        </div>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-12">
         <section>
-          <h3 className="text-xl font-extrabold text-black mb-6">Basic Details</h3>
+          <h3 className="text-xl font-extrabold text-black mb-6">
+            Basic Details
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderField("First Name", "firstName")}
             {renderField("Last Name", "lastName")}
@@ -192,7 +191,9 @@ const Profile: React.FC = () => {
         </section>
 
         <section>
-          <h3 className="text-xl font-extrabold text-black mb-6">Bank Details</h3>
+          <h3 className="text-xl font-extrabold text-black mb-6">
+            Bank Details
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderField("Bank Name", "bankName")}
             {renderField("Account Number", "accountNumber", "text", "account")}
@@ -205,7 +206,9 @@ const Profile: React.FC = () => {
         </section>
 
         <section>
-          <h3 className="text-xl font-extrabold text-black mb-6">Educational Details</h3>
+          <h3 className="text-xl font-extrabold text-black mb-6">
+            Educational Details
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderField("Highest Qualification", "qualification")}
             {renderField("University/Institution", "institution")}
@@ -226,7 +229,6 @@ const Profile: React.FC = () => {
         )}
       </form>
     </div>
-    
   );
 };
 

@@ -8,12 +8,11 @@ import {
   Bell,
   Trash2,
 } from "lucide-react";
-// import { formatDistanceToNow } from "date-fns"; // Optional for relative time
 
 interface Notification {
   id: string;
   message: string;
-  time: string; // You can convert to Date if needed
+  time: string;
   type: "birthday" | "leave" | "new_user" | "anniversary" | "general";
   isRead: boolean;
 }
@@ -66,9 +65,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       </div>
       <div className="flex-1">
         <p className="text-sm font-medium text-[#113F67]">{n.message}</p>
-        <p className="text-xs text-gray-500">
-          {n.createdAt}
-        </p>
+        <p className="text-xs text-gray-500">{n.createdAt}</p>
         {!n.isRead && (
           <button
             onClick={() => onMarkAsRead(n._id)}
@@ -86,7 +83,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       </button>
     </div>
   );
-  console.log(notifications)
+  console.log(notifications);
 
   return (
     <div className="fixed top-16 right-6 z-50 w-80 bg-white rounded-xl shadow-xl border border-gray-300">

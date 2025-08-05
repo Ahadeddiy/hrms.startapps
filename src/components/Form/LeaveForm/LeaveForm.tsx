@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 interface LeaveRequest {
-  leaveType: "sick" | "casual";
+   leaveType: "sick" | "casual" | "work";
   dayType: "fullday" | "halfday";
   startDate: string;
   endDate?: string;
@@ -64,7 +64,7 @@ const LeaveRequestForm: React.FC = () => {
     >
       <h2 className="text-2xl font-bold text-center">Leave Request Form</h2>
 
-      {/* Leave Type & Day Type */}
+     
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block mb-2 font-semibold">Leave Type</label>
@@ -75,6 +75,7 @@ const LeaveRequestForm: React.FC = () => {
             <option value="">Select Type</option>
             <option value="sick">Sick Leave</option>
             <option value="casual">Casual Leave</option>
+            <option value="work">Work From Home</option>
           </select>
           {errors.leaveType && (
             <p className="text-red-500 text-sm mt-1">
@@ -101,7 +102,6 @@ const LeaveRequestForm: React.FC = () => {
         </div>
       </div>
 
-      {/* Start Date & End Date */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block mb-2 font-semibold">Start Date</label>
@@ -161,7 +161,7 @@ const LeaveRequestForm: React.FC = () => {
         )}
       </div>
 
-      {/* Reason */}
+ 
       <div>
         <label className="block mb-2 font-semibold">Reason</label>
         <textarea
@@ -181,7 +181,7 @@ const LeaveRequestForm: React.FC = () => {
         )}
       </div>
 
-      {/* Submit Button */}
+      
       <div className="text-right">
         <button
           type="submit"

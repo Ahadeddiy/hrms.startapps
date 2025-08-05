@@ -1,4 +1,3 @@
-// navigationSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface NavigationState {
@@ -15,7 +14,7 @@ const navigationSlice = createSlice({
   reducers: {
     pushToHistory: (state, action: PayloadAction<string>) => {
       const newPath = action.payload;
-      // Avoid duplicates when route doesn't change
+      
       if (state.history[state.history.length - 1] !== newPath) {
         state.history.push(newPath);
       }

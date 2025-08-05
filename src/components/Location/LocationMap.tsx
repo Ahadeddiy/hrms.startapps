@@ -62,29 +62,7 @@ const LocationMap = ({ onAddressFetched, setLoading }: LocationMapProps) => {
     );
 
   return (
-    // <div className="space-y-3 mb-4 bg-white p-4 rounded-xl shadow-sm">
     <div className="align-content: center flex flex-col items-center justify-center space-y-3 mb-2.5 p-4">
-      {/* <MapContainer
-  center={coords}
-  zoom={16}
-  scrollWheelZoom={false}
-  style={{
-    height: "180px",
-    width: "90%",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-  }}
->
-  <TileLayer
-    attribution="&copy; OpenStreetMap contributors"
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-
-        <Marker position={coords}>
-          <Popup>
-            <span className="text-[#113F67] text-sm font-medium">{address}</span>
-          </Popup>
-        </Marker>
-      </MapContainer> */}
       <p className="text-sm text-[#113F67] font-medium align-middle">
         <span className="text-[#226597] font-semibold">Detected Address:</span>{" "}
         {address}

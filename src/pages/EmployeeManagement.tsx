@@ -28,14 +28,6 @@ interface Employee {
   email?: string | null;
 }
 
-
-
-
-
-
-
-
-
 const EmployeeManagement = () => {
   const [employeeData, setEmployeeData] = useState<Employee[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -133,7 +125,6 @@ const EmployeeManagement = () => {
 
   const handleRequestDelete = (userId: string) => {
     toast.info("Delete request sent for approval.");
-    // console.log(`Delete request sent for: ${userId}`);
   };
 
   const handleViewProfile = (id: string) => {
@@ -162,7 +153,6 @@ const EmployeeManagement = () => {
     );
   });
 
-  // Sort if needed
   if (filters.sortOrder === "latest") {
     filteredEmployees.sort(
       (a, b) =>
@@ -198,7 +188,7 @@ const EmployeeManagement = () => {
 
   return (
     <div className="relative min-h-[400px] overflow-x-auto rounded-xl p-3 bg-white">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <Autocomplete<Employee>
           data={employeeData}
           searchFields={[
@@ -231,7 +221,11 @@ const EmployeeManagement = () => {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center gap-2 bg-[#226597] text-white px-4 py-2 rounded hover:bg-[#1c4c7a]"
+              className="flex items-center gap-2 bg-[#226597] text-white 
+  px-2 py-1 text-sm 
+  sm:px-1 sm:py-1.5 sm:text-sm 
+  md:px-4 md:py-2 md:text-base 
+  rounded hover:bg-[#1c4c7a]"
             >
               <ListFilter size={20} /> Filters <ChevronDown size={16} />
             </button>
@@ -379,7 +373,14 @@ const EmployeeManagement = () => {
 
           <button
             onClick={() => navigate("/admin/add-employee")}
-            className="bg-[#226597] text-white px-4 py-2 rounded-md  cursor-pointer font-semibold flex items-center gap-2 hover:bg-[#1c4c7a]"
+            className="bg-[#226597] text-white 
+  px-2 py-1 text-sm w-full justify-center
+  sm:px-3 sm:py-1 sm:text-sm sm:w-auto
+  md:px-1 md:py-0 md:text-base
+  lg:px-5 lg:py-1.5 lg:text-lg 
+  rounded-md cursor-pointer font-semibold 
+  flex items-center gap-2 
+  hover:bg-[#1c4c7a]"
           >
             Create User <UserPlus size={18} />
           </button>
@@ -387,7 +388,11 @@ const EmployeeManagement = () => {
           {role === "SuperAdmin" ? (
             <button
               onClick={() => setShowArchived((prev) => !prev)}
-              className="bg-[#226597] text-white px-4 py-2 rounded-md cursor-pointer font-semibold flex items-center gap-2 hover:bg-[#1c4c7a]"
+              className="flex items-center gap-2 bg-[#226597] text-white 
+  lg:px-2 lg:py-1.5 text-sm 
+  sm:px-3 sm:py-1.5 sm:text-sm 
+  md:px-2 md:py-1 md:text-base 
+  rounded hover:bg-[#1c4c7a]"
               title="Archive Soft Deleted User"
             >
               {!showArchived ? (
@@ -402,143 +407,145 @@ const EmployeeManagement = () => {
         </div>
       </div>
 
-      <table className={`w-full text-sm text-left`}>
-        <thead
-          className={`${
-            !showArchived
-              ? "bg-[#113F67] text-white"
-              : "bg-[#071b2c] text-gray-200"
-          } uppercase font-medium text-sm`}
-        >
-          <tr>
-            {headers.map((header) => (
-              <th key={header} className="px-4 py-3 whitespace-nowrap">
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedFiltered.map((emp, index) => (
-            <tr
-              key={emp._id}
-              className={`${
-                index % 2 === 0
-                  ? !showArchived
-                    ? "bg-white text-black"
-                    : "bg-gray-100 text-gray-500"
-                  : "bg-[#F3F9FB]"
-              }`}
-            >
-              <td className="px-4 py-3 font-medium">
-                {safeDisplay(emp.firstName, true)}{" "}
-                {safeDisplay(emp.lastName, true)}
-              </td>
-              <td className="px-4 py-3">{safeDisplay(emp.email, true)}</td>
-              <td className="px-4 py-3">
-                {safeDisplay(emp.designation, true)}
-              </td>
-              <td className="px-4 py-3">
-                {emp.joiningDate
-                  ? new Date(emp.joiningDate).toLocaleDateString("en-GB")
-                  : "N/A"}
-              </td>
-              <td className="px-4 py-3">
-                {safeDisplay(emp.employmentType, true)}
-              </td>
-              <td className="px-4 py-3">{safeDisplay(emp.gender, true)}</td>
-              <td className="px-4 py-3 flex gap-2">
-                <button
-                  onClick={() => handleViewProfile(emp._id)}
-                  className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
-                >
-                  <Eye size={18} color="#113F67" />
-                </button>
-                <button
-                  onClick={() => handleEditProfile(emp._id)}
-                  className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
-                >
-                  <Edit size={18} color="#113F67" />
-                </button>
-                {role === "SuperAdmin" ? (
+      <div className="w-full overflow-x-auto">
+        <table className="w-full text-sm text-left">
+          <thead
+            className={`${
+              !showArchived
+                ? "bg-[#113F67] text-white"
+                : "bg-[#071b2c] text-gray-200"
+            } uppercase font-medium text-sm`}
+          >
+            <tr>
+              {headers.map((header) => (
+                <th key={header} className="px-4 py-3 whitespace-nowrap">
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedFiltered.map((emp, index) => (
+              <tr
+                key={emp._id}
+                className={`${
+                  index % 2 === 0
+                    ? !showArchived
+                      ? "bg-white text-black"
+                      : "bg-gray-100 text-gray-500"
+                    : "bg-[#F3F9FB]"
+                }`}
+              >
+                <td className="px-4 py-3 font-medium">
+                  {safeDisplay(emp.firstName, true)}{" "}
+                  {safeDisplay(emp.lastName, true)}
+                </td>
+                <td className="px-4 py-3">{safeDisplay(emp.email, true)}</td>
+                <td className="px-4 py-3">
+                  {safeDisplay(emp.designation, true)}
+                </td>
+                <td className="px-4 py-3">
+                  {emp.joiningDate
+                    ? new Date(emp.joiningDate).toLocaleDateString("en-GB")
+                    : "N/A"}
+                </td>
+                <td className="px-4 py-3">
+                  {safeDisplay(emp.employmentType, true)}
+                </td>
+                <td className="px-4 py-3">{safeDisplay(emp.gender, true)}</td>
+                <td className="px-4 py-3 flex gap-2">
                   <button
-                    onClick={() => openModal(emp._id)}
+                    onClick={() => handleViewProfile(emp._id)}
                     className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
                   >
-                    <Trash2 size={18} color="#113F67" />
+                    <Eye size={18} color="#113F67" />
                   </button>
-                ) : (
                   <button
-                    onClick={() => handleRequestDelete(emp._id)}
-                    className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                    onClick={() => handleEditProfile(emp._id)}
+                    className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
                   >
-                    <Trash2 size={18} color="#113F67" />
+                    <Edit size={18} color="#113F67" />
                   </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  {role === "SuperAdmin" ? (
+                    <button
+                      onClick={() => openModal(emp._id)}
+                      className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                    >
+                      <Trash2 size={18} color="#113F67" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleRequestDelete(emp._id)}
+                      className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                    >
+                      <Trash2 size={18} color="#113F67" />
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      {/* Show message if no results */}
-      {filteredEmployees.length === 0 && (
-        <div className="text-center py-6 text-gray-600 font-medium">
-          No such user exists.
-        </div>
-      )}
+        {filteredEmployees.length === 0 && (
+          <div className="text-center py-6 text-gray-600 font-medium">
+            No such user exists.
+          </div>
+        )}
 
-      {filteredEmployees.length > 0 && (
-        <div className="flex justify-between mt-6 items-center">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md disabled:opacity-0"
-          >
-            Prev
-          </button>
+        {filteredEmployees.length > 0 && (
+          <div className="flex justify-between mt-6 items-center">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md disabled:opacity-0"
+            >
+              Prev
+            </button>
 
-          <span className="text-sm text-[#113F67]">
-            Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
-          </span>
+            <span className="text-sm text-[#113F67]">
+              Page <strong>{currentPage}</strong> of{" "}
+              <strong>{totalPages}</strong>
+            </span>
 
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md hover:bg-[#1c4c7a] disabled:opacity-0"
-          >
-            Next
-          </button>
-        </div>
-      )}
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-[#226597] cursor-pointer text-white rounded-md hover:bg-[#1c4c7a] disabled:opacity-0"
+            >
+              Next
+            </button>
+          </div>
+        )}
 
-      {isModalOpen && (
-        <div
-          className="fixed inset-0  backdrop-blur-sm
+        {isModalOpen && (
+          <div
+            className="fixed inset-0  backdrop-blur-sm
 bg-opacity-70 flex items-center justify-center z-50"
-        >
-          <div className="bg-white p-6 rounded shadow-md w-80">
-            <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
-            <p>Are you sure you want to delete this user?</p>
-            <div className="flex justify-end gap-3 mt-6">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => handleDelete(userToDelete!)}
-                className="px-4 py-2 bg-[#226597] text-white rounded hover:bg-[#1c4c7a]"
-              >
-                Delete
-              </button>
+          >
+            <div className="bg-white p-6 rounded shadow-md w-80">
+              <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+              <p>Are you sure you want to delete this user?</p>
+              <div className="flex justify-end gap-3 mt-6">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleDelete(userToDelete!)}
+                  className="px-4 py-2 bg-[#226597] text-white rounded hover:bg-[#1c4c7a]"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

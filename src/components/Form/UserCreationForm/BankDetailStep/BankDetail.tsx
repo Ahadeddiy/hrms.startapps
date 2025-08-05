@@ -27,7 +27,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
   }`;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
-      {/* Bank Name */}
+     
       <div>
         <label className="text-sm font-medium text-gray-700 mb-1">Bank Name</label>
         <input
@@ -42,7 +42,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
         )}
       </div>
 
-      {/* Account Number */}
+      
       <div>
         <label className="text-sm font-medium text-gray-700 mb-1">Account Number</label>
         <input
@@ -64,7 +64,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
         )}
       </div>
 
-      {/* IFSC Code */}
+      
       <div>
         <label className="text-sm font-medium text-gray-700 mb-1">IFSC Code</label>
         <input
@@ -89,7 +89,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
         )}
       </div>
 
-      {/* Branch Name */}
+      
       <div>
         <label className="text-sm font-medium text-gray-700 mb-1">Branch Name</label>
         <input
@@ -106,7 +106,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
         )}
       </div>
 
-      {/* Account Holder Name */}
+     
       <div>
         <label className="text-sm font-medium text-gray-700 mb-1">Account Holder Name</label>
         <input
@@ -123,8 +123,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
         )}
       </div>
 
-      {/* Aadhar Number */}
-      <div>
+ <div>
         <label className="text-sm font-medium text-gray-700 mb-1">Aadhar Number</label>
         <input
           {...register("bankDetails.adharNumber", {
@@ -146,7 +145,7 @@ const BankDetailsForm: React.FC<{ readOnly?: boolean }> = ({
         )}
       </div>
 
-      {/* PAN Number */}
+     
       <div>
         <label className="text-sm font-medium text-gray-700 mb-1">PAN Number</label>
         <input
