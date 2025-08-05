@@ -21,13 +21,15 @@ import { getEmployeeById } from "../../../api/auth";
 import { ChangePassword } from "../../ChangePassword/ChangePassoword";
 import { fetchNotifications } from "../../../api/notification";
 import NotificationModal from "../../Modal/NotificationModal";
+import { markAllNotificationsAsRead,markNotificationAsRead,deleteNotification } from "../../../api/notification";
+
 
 const EmployeeLayout: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector((state: RootState) => state.user.user);
-
+  
   const [employeeData, setEmployeeData] = useState<any>(null);
   const [pageTitle, setPageTitle] = useState("Dashboard");
   const [showSettings, setShowSettings] = useState(false);
@@ -77,6 +79,39 @@ const EmployeeLayout: React.FC = () => {
     };
     fetchData();
   }, [id]);
+
+  const handleMarkAsRead = async (id: string) => {
+      try {
+        await markNotificationAsRead(id);
+        setNotifications((prev) =>
+          prev.map((n) => (n._id === id ? { ...n, isRead: true } : n))
+        );
+      } catch (error) {
+        console.error("Mark as read error:", error);
+      }
+    };
+  
+    const handleDelete = async (id: string) => {
+      try {
+        await deleteNotification(id);
+        setNotifications((prev) => prev.filter((n) => n._id !== id));
+      } catch (error) {
+        console.error("Delete error:", error);
+      }
+    };
+  
+    const handleMarkAllAsRead = async () => {
+      try {
+        await markAllNotificationsAsRead(id);
+        setNotifications((prev) =>
+          prev.map((n) => ({ ...n, isRead: true }))
+        );
+      setUnreadCount(0);
+      } catch (error) {
+        console.error("Mark all as read error:", error);
+      }
+    };
+  
   return (
     <>
       <div className="flex h-screen bg-[#F3F9FB]">
@@ -93,6 +128,11 @@ const EmployeeLayout: React.FC = () => {
               <div className="text-sm text-white capitalize">{role}</div>
             </div>
           </div>
+
+
+
+
+          
 
           {/* Navigation */}
           <nav className="flex flex-col gap-3 flex-grow">
@@ -179,7 +219,7 @@ const EmployeeLayout: React.FC = () => {
                         setShowChangePasswordModal(true);
                         setShowSettings(false);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm hover:bg-[#f0f4f8] text-[#113F67]"
+                      className="w-full px-4 py-2 text-left text-sm "
                     >
                       Change Password
                     </button>
@@ -214,12 +254,16 @@ const EmployeeLayout: React.FC = () => {
           </div>
         </div>
       )}
-      {showNotification && (
-          <NotificationModal
-            onClose={() => setShowNotification(false)}
-            notifications={notifications}
-          />
-        )}
+        {showNotification && (
+              <NotificationModal
+                onClose={() => setShowNotification(false)}
+                notifications={notifications}
+                onMarkAsRead={handleMarkAsRead}
+                onDelete={handleDelete}
+                onMarkAllAsRead={handleMarkAllAsRead}
+      
+              />
+            )}
     </>
   );
 };

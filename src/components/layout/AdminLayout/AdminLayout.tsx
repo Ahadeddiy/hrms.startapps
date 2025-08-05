@@ -24,6 +24,7 @@ import profileImage from "../../../assets/userlogo.png";
 import { ChangePassword } from "../../ChangePassword/ChangePassoword";
 import NotificationModal from "../../Modal/NotificationModal";
 import { fetchNotifications } from "../../../api/notification";
+import { markAllNotificationsAsRead,markNotificationAsRead,deleteNotification } from "../../../api/notification";
 
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -32,11 +33,10 @@ const AdminLayout: React.FC = () => {
   const role = user?.role?.toLowerCase() || "guest";
   const id  = user?.userId
   const location = useLocation();
-
   const [pageTitle, setPageTitle] = useState("Dashboard");
-    const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
-
+  const [unreadCount, setUnreadCount] = useState(0);
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
     {}
   );
@@ -77,6 +77,8 @@ const AdminLayout: React.FC = () => {
       try {
         const notifiactionData = await fetchNotifications(id);
         setNotifications(notifiactionData);
+         const unread = notifiactionData.filter((n) => !n.isRead).length;
+      setUnreadCount(unread);
       } catch (error) {
         console.error("Failed to fetch notifications:", error);
       }
@@ -274,6 +276,38 @@ const AdminLayout: React.FC = () => {
     dispatch(logout());
     navigate("/");
   };
+    const handleMarkAsRead = async (id: string) => {
+    try {
+      await markNotificationAsRead(id);
+      setNotifications((prev) =>
+        prev.map((n) => (n._id === id ? { ...n, isRead: true } : n))
+      );
+    } catch (error) {
+      console.error("Mark as read error:", error);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteNotification(id);
+      setNotifications((prev) => prev.filter((n) => n._id !== id));
+    } catch (error) {
+      console.error("Delete error:", error);
+    }
+  };
+
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllNotificationsAsRead(id);
+      setNotifications((prev) =>
+        prev.map((n) => ({ ...n, isRead: true }))
+      );
+    setUnreadCount(0);
+    } catch (error) {
+      console.error("Mark all as read error:", error);
+    }
+  };
+
 
   return (
     <>
@@ -352,7 +386,11 @@ const AdminLayout: React.FC = () => {
               <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
               onClick={() => setShowNotification((prev) => !prev)}>
                 <Bell size={20} className="text-[#113F67]" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
+                {unreadCount > 0 && (
+    <span className="absolute top-1 left-5 text-xs bg-red-600 text-white font-bold w-5 h-5 flex items-center justify-center rounded-full">
+      {unreadCount}
+    </span>
+  )}
               </button>
               <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
                 <Mail size={20} className="text-[#113F67]" />
@@ -376,7 +414,7 @@ const AdminLayout: React.FC = () => {
                         setShowChangePasswordModal(true);
                         setShowSettings(false);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm hover:bg-[#f0f4f8] text-[#113F67]"
+                      className="w-full px-4 py-2 text-left text-sm text-[#113F67]"
                     >
                       Change Password
                     </button>
@@ -385,6 +423,12 @@ const AdminLayout: React.FC = () => {
               </div>
             </div>
           </div>
+
+
+
+
+
+
 
           <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
             <header className="mb-3">
@@ -417,6 +461,10 @@ const AdminLayout: React.FC = () => {
         <NotificationModal
           onClose={() => setShowNotification(false)}
           notifications={notifications}
+          onMarkAsRead={handleMarkAsRead}
+          onDelete={handleDelete}
+          onMarkAllAsRead={handleMarkAllAsRead}
+
         />
       )}
     </>

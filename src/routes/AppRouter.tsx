@@ -67,7 +67,7 @@ const AppRouter = () => {
           <Route path="/admin/employee/edit/:id" element={<Profile />} />
           </Route>
 
-        {/* Employee Routes */}
+        {/*  Employee Routes  */}
         <Route
           path="/employee"
           element={
