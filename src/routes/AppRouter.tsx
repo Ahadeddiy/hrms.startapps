@@ -58,6 +58,7 @@ const AppRouter = () => {
             element={<EmployeeForm />}
           />
           <Route path="leave-requests" element={<LeaveRequests />} />
+          <Route path="leave-apply" element={<LeaveRequestForm />} />
           <Route path="approval-history" element={<ApprovalHistory />} />
           <Route path="profile" element={<Profile />} />
           <Route path="payroll" element={<Payroll />} />
