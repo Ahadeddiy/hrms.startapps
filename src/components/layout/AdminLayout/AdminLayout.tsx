@@ -414,7 +414,7 @@ const AdminLayout: React.FC = () => {
                         setShowChangePasswordModal(true);
                         setShowSettings(false);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm hover:bg-[#f0f4f8] text-[#113F67]"
+                      className="w-full px-4 py-2 text-left text-sm text-[#113F67]"
                     >
                       Change Password
                     </button>
@@ -423,6 +423,12 @@ const AdminLayout: React.FC = () => {
               </div>
             </div>
           </div>
+
+
+
+
+
+
 
           <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
             <header className="mb-3">

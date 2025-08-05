@@ -129,6 +129,11 @@ const EmployeeLayout: React.FC = () => {
             </div>
           </div>
 
+
+
+
+          
+
           {/* Navigation */}
           <nav className="flex flex-col gap-3 flex-grow">
             {linksToShow.map(({ label, path, icon: Icon }) =>
@@ -214,7 +219,7 @@ const EmployeeLayout: React.FC = () => {
                         setShowChangePasswordModal(true);
                         setShowSettings(false);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm hover:bg-[#f0f4f8] text-[#113F67]"
+                      className="w-full px-4 py-2 text-left text-sm "
                     >
                       Change Password
                     </button>

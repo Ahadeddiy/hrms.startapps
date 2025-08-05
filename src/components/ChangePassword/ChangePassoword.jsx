@@ -17,6 +17,14 @@ const schema = yup.object().shape({
     .required("Please confirm your password"),
 });
 
+
+
+
+
+
+
+
+
 export const ChangePassword = () => {
   const {
     register,
@@ -63,7 +71,7 @@ export const ChangePassword = () => {
           type="password"
           placeholder="Old Password"
           {...register("oldPassword")}
-          className="bg-gray-50 border border-gray-300 h-10 p-2 rounded-sm focus:outline-none focus:ring-2 focus:ring-[#113F67]"
+          className="bg-gray-50 border border-gray-300 h-10 p-2 rounded-sm "
         />
         {errors.oldPassword && (
           <p className="text-red-500 text-sm -mt-2">
@@ -75,7 +83,7 @@ export const ChangePassword = () => {
           type="password"
           placeholder="New Password"
           {...register("newPassword")}
-          className="bg-gray-50 border border-gray-300 h-10 p-2 rounded-sm focus:outline-none focus:ring-2 focus:ring-[#113F67]"
+          className="bg-gray-50 border border-gray-300 h-10 p-2 rounded-sm "
         />
         {errors.newPassword && (
           <p className="text-red-500 text-sm -mt-2">
@@ -87,7 +95,7 @@ export const ChangePassword = () => {
           type="password"
           placeholder="Confirm New Password"
           {...register("confirmPassword")}
-          className="bg-gray-50 border border-gray-300 h-10 p-2 rounded-sm focus:outline-none focus:ring-2 focus:ring-[#113F67]"
+          className="bg-gray-50 border border-gray-300 h-10 p-2 rounded-sm "
         />
         {errors.confirmPassword && (
           <p className="text-red-500 text-sm -mt-2">
@@ -97,7 +105,7 @@ export const ChangePassword = () => {
 
         <button
           type="submit"
-          className="bg-[#226597] text-white cursor-pointer p-2 rounded-sm hover:bg-[#113F67] transition-2"
+          className="bg-[#226597] text-white cursor-pointer p-2 rounded-sm "
         >
           Set Password
         </button>
