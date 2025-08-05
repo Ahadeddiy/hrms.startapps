@@ -86,7 +86,6 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       </button>
     </div>
   );
-  console.log(notifications)
 
   return (
     <div className="fixed top-16 right-6 z-50 w-80 bg-white rounded-xl shadow-xl border border-gray-300">

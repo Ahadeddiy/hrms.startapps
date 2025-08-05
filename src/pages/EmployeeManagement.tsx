@@ -391,9 +391,9 @@ const EmployeeManagement = () => {
               title="Archive Soft Deleted User"
             >
               {!showArchived ? (
-                <Archive size={25} />
+                <Archive size={20} />
               ) : (
-                <ArchiveRestore size={18} />
+                <ArchiveRestore size={20} />
               )}
             </button>
           ) : (

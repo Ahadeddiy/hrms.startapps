@@ -215,6 +215,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
           <label className="text-sm font-medium text-gray-700 mb-1">{field.label}</label>
             <input
               {...register(`basicDetails.${field.name}` as const, {
+                 required: !readOnly ? "This field is required" : false,
                 pattern: field.pattern
                   ? { value: field.pattern, message: field.patternMsg }
                   : undefined,
@@ -237,17 +238,22 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
         <label className="text-sm font-medium text-gray-700 mb-1">Joining Date</label>
         <input
           type="date"
-          {...register("basicDetails.joiningDate")}
+          {...register("basicDetails.joiningDate", {required: !readOnly ? "Joining Date is required" : false})}
           disabled={readOnly}
           className={inputClass}
         />
+         <div className="h-5 mt-1">
+        {!readOnly && errors.basicDetails?.joiningDate?.message && (
+          <p className="text-red-500 text-sm">{errors.basicDetails.joiningDate.message}</p>
+        )}
+        </div>
       </div>
 
       {/* Department */}
       <div className="flex flex-col">
         <label className="text-sm font-medium text-gray-700 mb-1">Department</label>
         <select
-          {...register("basicDetails.department")}
+          {...register("basicDetails.department",{ required: !readOnly ? "Department is required" : false,})}
           disabled={readOnly}
           className={inputClass}
         >
@@ -267,7 +273,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
       <div className="flex flex-col">
         <label className="text-sm font-medium text-gray-700 mb-1">Designation</label>
         <select
-          {...register("basicDetails.designation")}
+          {...register("basicDetails.designation",{ required: !readOnly ? "Designation is required" : false,})}
           disabled={readOnly || !selectedDepartment}
           className={inputClass}
         >
@@ -289,7 +295,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
       <div className="flex flex-col">
         <label className="text-sm font-medium text-gray-700 mb-1">Employment Type</label>
         <select
-          {...register("basicDetails.employmentType")}
+          {...register("basicDetails.employmentType",{ required: !readOnly ? "Employee Type is required" : false})}
           disabled={readOnly}
           className={inputClass}
         >
@@ -298,6 +304,11 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
           <option value="intern">Intern</option>
           <option value="contract">Contract</option>
         </select>
+         <div className="h-5 mt-1">
+        {!readOnly && errors.basicDetails?.employmentType?.message && (
+          <p className="text-red-500 text-sm">{errors.basicDetails.employmentType.message}</p>
+        )}
+        </div>
       </div>
 
       {/* Upload Profile Image */}
@@ -309,6 +320,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }
             accept="image/*"
             onChange={handleFileChange}
             className="block w-full text-sm cursor-pointer text-gray-700 file:mr-4 file:py-2 file:px-4 file:border file:rounded file:border-gray-300 file:bg-white hover:file:bg-gray-100"
+            required
           />
           {previewUrl && (
             <img
