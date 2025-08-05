@@ -15,7 +15,6 @@ const CommonLayout = ({ allowedRoles }) => {
     return <Navigate to="/" replace />; 
   }
 
-  // Render layout based on role
   if (role === "admin" || role === "superadmin" || role === "hr") {
     return (
       <ProtectedRoute allowedRoles={["admin", "superadmin", "hr", "employee"]}>
@@ -30,7 +29,7 @@ const CommonLayout = ({ allowedRoles }) => {
     );
   }
 
-  // fallback
+ 
   return <Navigate to="/" replace />;
 };
 

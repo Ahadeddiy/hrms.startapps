@@ -41,7 +41,6 @@ const LeaveDetailsModal: React.FC<LeaveDetailsModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md px-6 py-4 relative">
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-4 text-gray-400 hover:text-black text-xl font-bold"
@@ -50,12 +49,10 @@ const LeaveDetailsModal: React.FC<LeaveDetailsModalProps> = ({
           ×
         </button>
 
-        {/* Title */}
         <h2 className="text-center text-lg font-semibold text-[#174EA6] mb-2">
           {user?.name ? `${user.name}'s Leave Details` : "Leave Details"}
         </h2>
 
-        {/* Form Fields */}
         <div className="space-y-4">
           <label className="block">
             <span className="text-[#113F67] font-medium">Start Date</span>

@@ -15,9 +15,8 @@ import Payroll from "../pages/Payroll";
 import Reports from "../pages/Reports";
 import EmployeeManagement from "../pages/EmployeeManagement";
 import EmployeeDashboard from "../pages/EmployeeDashboard";
-// import Stepper from "../components/Stepper/Stepper";
 import EmployeeForm from "../components/Form/UserCreationForm/EmployeeForm/EmployeeForm";
-import Unauthorized from "../pages/Unauthorised"; // create this page
+import Unauthorized from "../pages/Unauthorised";
 import ViewEmployee from "../pages/ViewEmployee";
 import UpdateEmployee from "../pages/UpdateEmployee";
 import AttendanceManagement from "../pages/AttendanceMangement";
@@ -31,14 +30,12 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         <Route path="/" element={<Login />} />
-        <Route path="/reset-mail-message" element={<EmailSentMessge/>}/>
-        <Route path="/reset-password" element={<ResetPasswordForm/>}/>
+        <Route path="/reset-mail-message" element={<EmailSentMessge />} />
+        <Route path="/reset-password" element={<ResetPasswordForm />} />
 
-        {/* Admin Routes */}
         <Route
           path="/admin"
           element={
@@ -51,7 +48,7 @@ const AppRouter = () => {
         >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="employee-management" element={<EmployeeManagement />} />
-          <Route path="attendance" element={<AttendanceManagement/>} />
+          <Route path="attendance" element={<AttendanceManagement />} />
           <Route path="add-employee" element={<RegisterPage />} />
           <Route
             path="/admin/add-employee-details/:id"
@@ -65,9 +62,8 @@ const AppRouter = () => {
           <Route path="reports" element={<Reports />} />
           <Route path="/admin/employee/:id" element={<Profile />} />
           <Route path="/admin/employee/edit/:id" element={<Profile />} />
-          </Route>
+        </Route>
 
-        {/*  Employee Routes  */}
         <Route
           path="/employee"
           element={
@@ -77,7 +73,7 @@ const AppRouter = () => {
           }
         >
           <Route index element={<EmployeeDashboard />} />
-          <Route path="attendance" element={<AttendanceManagement/>} />
+          <Route path="attendance" element={<AttendanceManagement />} />
           <Route path="leaves" element={<EmployeeLeaveDashboard />} />
           <Route path="request-leave" element={<LeaveRequestForm />} />
 
@@ -85,7 +81,6 @@ const AppRouter = () => {
           <Route path="profile" element={<Profile />} />
         </Route>
 
-        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
       </Routes>

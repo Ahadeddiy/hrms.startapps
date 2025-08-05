@@ -268,7 +268,6 @@ const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
         )}
       </form>
     </div>
-    
   );
 };
 

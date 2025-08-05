@@ -4,8 +4,8 @@ import "react-calendar/dist/Calendar.css";
 import "./custom-calendar.css";
 
 const holidays: Date[] = [
-  new Date(2025, 3, 14), // April 14, 2025
-  new Date(2025, 4, 1), // May 1, 2025
+  new Date(2025, 3, 14), 
+  new Date(2025, 4, 1), 
 ];
 
 const isHoliday = (date: Date): boolean =>

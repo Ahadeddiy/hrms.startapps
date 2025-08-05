@@ -9,7 +9,7 @@ type Employee = {
   doj: string;
   role: string;
   dept: string;
-  actions: "edit" | "delete"; // optional: if you still want to keep this
+  actions: "edit" | "delete"; 
 };
 
 type TableProps = {

@@ -138,7 +138,7 @@ export default function ProfileForm({ role }: ProfileFormProps) {
 
   return (
     <div className="max-w-7xl mx-auto p-6 flex flex-col md:flex-row gap-6">
-      {/* Profile Card */}
+     
       <div className="w-full md:w-1/4 bg-white rounded-xl shadow-md p-6 flex flex-col items-center sticky top-6 h-fit">
         <div className="relative w-32 h-32 mb-4">
           <img
@@ -178,13 +178,13 @@ export default function ProfileForm({ role }: ProfileFormProps) {
         </div>
       </div>
 
-      {/* Form Section */}
+     
       <div className="w-full md:w-3/4 overflow-x-auto">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="min-w-[600px] space-y-8"
         >
-          {/* Basic Details */}
+          
           <Section title="Basic Details">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
@@ -243,7 +243,7 @@ export default function ProfileForm({ role }: ProfileFormProps) {
               </div>
             </div>
 
-            {/* Address */}
+           
             <h3 className="text-lg font-semibold mt-6 mb-2">Address</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
@@ -279,7 +279,7 @@ export default function ProfileForm({ role }: ProfileFormProps) {
             </div>
           </Section>
 
-          {/* Bank Details */}
+   
           <Section title="Bank Details">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
@@ -323,7 +323,7 @@ export default function ProfileForm({ role }: ProfileFormProps) {
             </div>
           </Section>
 
-          {/* Educational Details */}
+          
           <Section title="Educational Details">
             {getValues("educationalDetails").map((_, index) => (
               <div key={index} className="bg-gray-100 p-4 rounded-lg mb-4">
@@ -368,7 +368,6 @@ export default function ProfileForm({ role }: ProfileFormProps) {
             ))}
           </Section>
 
-          {/* Action Buttons */}
           <div className="flex justify-end space-x-4 pt-4">
             {!isEditing && role === "employee" && (
               <button

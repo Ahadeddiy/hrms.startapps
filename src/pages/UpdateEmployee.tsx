@@ -1,9 +1,8 @@
-// src/pages/UpdateEmployee.tsx
+
 import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 
-// import UserAccountCreationForm from "../components/Form/UserCreationForm/AccountCreationStep/AccountCreation";
 import BasicDetailsForm from "../components/Form/UserCreationForm/BasicDetails/BasicDetail";
 import EducationDetailsForm from "../components/Form/UserCreationForm/EducationDetails/EducationDetail";
 import BankDetailsForm from "../components/Form/UserCreationForm/BankDetailStep/BankDetail";
@@ -14,7 +13,7 @@ import { getEmployeeById, updateEmployee } from "../api/auth";
 
 const steps = ["Basic Details", "Educational Details", "Bank Details"];
 const stepComponents = [
-  // UserAccountCreationForm,
+  
   BasicDetailsForm,
   EducationDetailsForm,
   BankDetailsForm,

@@ -24,14 +24,18 @@ import profileImage from "../../../assets/userlogo.png";
 import { ChangePassword } from "../../ChangePassword/ChangePassoword";
 import NotificationModal from "../../Modal/NotificationModal";
 import { fetchNotifications } from "../../../api/notification";
-import { markAllNotificationsAsRead,markNotificationAsRead,deleteNotification } from "../../../api/notification";
+import {
+  markAllNotificationsAsRead,
+  markNotificationAsRead,
+  deleteNotification,
+} from "../../../api/notification";
 
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
   const role = user?.role?.toLowerCase() || "guest";
-  const id  = user?.userId
+  const id = user?.userId;
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState("Dashboard");
   const [showNotification, setShowNotification] = useState(false);
@@ -72,13 +76,13 @@ const AdminLayout: React.FC = () => {
     }
   }, [location.pathname]);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const notifiactionData = await fetchNotifications(id);
         setNotifications(notifiactionData);
-         const unread = notifiactionData.filter((n) => !n.isRead).length;
-      setUnreadCount(unread);
+        const unread = notifiactionData.filter((n) => !n.isRead).length;
+        setUnreadCount(unread);
       } catch (error) {
         console.error("Failed to fetch notifications:", error);
       }
@@ -107,42 +111,7 @@ const AdminLayout: React.FC = () => {
         path: "/admin/leave-requests",
         icon: CalendarCheck,
       },
-      // {
-      //   label: "Payroll Management",
-      //   path: "/admin/payroll",
-      //   icon: HandCoins,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Document Management",
-      //   path: "/admin/documents",
-      //   icon: FileText,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Change Requests",
-      //   path: "/admin/change-requests",
-      //   icon: Repeat,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Reports",
-      //   path: "/admin/reports",
-      //   icon: BarChart2,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Approval History",
-      //   path: "/admin/approval-history",
-      //   icon: Clock,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Settings",
-      //   path: "/admin/settings",
-      //   icon: Settings,
-      //   disabled: true,
-      // },
+
       { label: "Profile", path: "/admin/profile", icon: User },
     ],
     admin: [
@@ -162,31 +131,7 @@ const AdminLayout: React.FC = () => {
         path: "/admin/leave-requests",
         icon: CalendarCheck,
       },
-      // { label: "Payroll Management", path: "/admin/payroll", icon: HandCoins },
-      // {
-      //   label: "Document Management",
-      //   path: "/admin/documents",
-      //   icon: FileText,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Change Requests",
-      //   path: "/admin/change-requests",
-      //   icon: Repeat,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Reports",
-      //   path: "/admin/reports",
-      //   icon: BarChart2,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Approval History",
-      //   path: "/admin/approval-history",
-      //   icon: Clock,
-      //   disabled: true,
-      // },
+
       { label: "Profile", path: "/admin/profile", icon: User },
     ],
     hr: [
@@ -206,66 +151,14 @@ const AdminLayout: React.FC = () => {
         path: "/admin/leave-requests",
         icon: CalendarCheck,
       },
-      // {
-      //   label: "Payroll Management",
-      //   path: "/admin/payroll",
-      //   icon: HandCoins,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Document Management",
-      //   path: "/admin/documents",
-      //   icon: FileText,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Change Requests",
-      //   path: "/admin/change-requests",
-      //   icon: Repeat,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Reports",
-      //   path: "/admin/reports",
-      //   icon: BarChart2,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Approval History",
-      //   path: "/admin/approval-history",
-      //   icon: Clock,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Settings",
-      //   path: "/admin/settings",
-      //   icon: Settings,
-      //   disabled: true,
-      // },
+
       { label: "Profile", path: "/admin/profile", icon: User },
     ],
     employee: [
       { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
       { label: "Attendance", path: "/attendance", icon: UserCheck },
       { label: "Leave Requests", path: "/leave-requests", icon: CalendarCheck },
-      // {
-      //   label: "Document Upload",
-      //   path: "/documents",
-      //   icon: FileText,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Change Requests",
-      //   path: "/change-requests",
-      //   icon: Repeat,
-      //   disabled: true,
-      // },
-      // {
-      //   label: "Approval History",
-      //   path: "/approval-history",
-      //   icon: Clock,
-      //   disabled: true,
-      // },
+
       { label: "Profile", path: "/profile", icon: User },
     ],
   };
@@ -276,7 +169,7 @@ const AdminLayout: React.FC = () => {
     dispatch(logout());
     navigate("/");
   };
-    const handleMarkAsRead = async (id: string) => {
+  const handleMarkAsRead = async (id: string) => {
     try {
       await markNotificationAsRead(id);
       setNotifications((prev) =>
@@ -299,27 +192,25 @@ const AdminLayout: React.FC = () => {
   const handleMarkAllAsRead = async () => {
     try {
       await markAllNotificationsAsRead(id);
-      setNotifications((prev) =>
-        prev.map((n) => ({ ...n, isRead: true }))
-      );
-    setUnreadCount(0);
+      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+      setUnreadCount(0);
     } catch (error) {
       console.error("Mark all as read error:", error);
     }
   };
 
-
   return (
     <>
       <div className="flex h-screen bg-[#F3F9FB]">
-        <aside className="w-72 bg-[#113F67] text-white flex flex-col p-4 shadow-lg">
-          <div className="flex items-center gap-4 p-3 bg-gray-300 rounded-xl mb-6 font-bold text-[#113F67]">
+        <aside className="w-16 md:w-72 bg-[#113F67] text-white flex flex-col p-4 shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-4 p-0 md:p-3 bg-transparent md:bg-gray-300 lg:rounded-xl mb-6 font-bold text-[#113F67]">
             <img
               src={user?.profileImage || profileImage}
               alt="Profile"
-              className="w-14 h-14 rounded-full object-cover p-0.5"
+              className="w-10 h-10 md:w-10 md:h-10 lg:w-14 lg:h-14 rounded-full object-cover"
             />
-            <div>
+
+            <div className="hidden md:block">
               <div className="text-lg capitalize font-extrabold text-[#113F67]">
                 {user?.name}
               </div>
@@ -344,7 +235,7 @@ const AdminLayout: React.FC = () => {
                     }
                   }}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-2 rounded-md text-base font-medium transition-all ${
+                    `flex items-center md:justify-start justify-center gap-0 md:gap-3 px-2 md:px-4 py-2 rounded-md text-base font-medium transition-all ${
                       disabled
                         ? "bg-gray-400 text-white cursor-not-allowed"
                         : isActive
@@ -354,7 +245,8 @@ const AdminLayout: React.FC = () => {
                   }
                 >
                   <Icon size={18} className="text-white" />
-                  {label}
+                  <span className="hidden md:inline">{label}</span>
+
                   {disabled && (
                     <span
                       className="ml-2 text-xs bg-[#113F67] text-white font-semibold px-2 py-0.5 rounded-full"
@@ -370,10 +262,10 @@ const AdminLayout: React.FC = () => {
 
           <button
             onClick={handleLogout}
-            className="mt-6 flex items-center cursor-pointer justify-center gap-3 px-4 py-3 bg-[#226597] hover:bg-[#87C0CD] text-white text-sm font-medium rounded-md"
+            className="mt-6 flex items-center cursor-pointer justify-center md:justify-start gap-3 px-0 md:px-4 py-3 bg-[#226597] hover:bg-[#87C0CD] text-white text-base font-medium rounded-md"
           >
-            <LogOut size={18} className="text-white" />
-            Logout
+            <LogOut size={20} className="text-white" />
+            <span className="hidden md:inline">Logout</span>
           </button>
         </aside>
 
@@ -383,18 +275,18 @@ const AdminLayout: React.FC = () => {
               Welcome, {role.charAt(0).toUpperCase() + role.slice(1)}
             </h1>
             <div className="flex items-center gap-4">
-              <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
-              onClick={() => setShowNotification((prev) => !prev)}>
+              <button
+                className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
+                onClick={() => setShowNotification((prev) => !prev)}
+              >
                 <Bell size={20} className="text-[#113F67]" />
                 {unreadCount > 0 && (
-    <span className="absolute top-1 left-5 text-xs bg-red-600 text-white font-bold w-5 h-5 flex items-center justify-center rounded-full">
-      {unreadCount}
-    </span>
-  )}
+                  <span className="absolute top-1 left-5 text-xs bg-red-600 text-white font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                    {unreadCount}
+                  </span>
+                )}
               </button>
-              <button className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer">
-                <Mail size={20} className="text-[#113F67]" />
-              </button>
+
               <div className="relative">
                 <button
                   id="settings-btn"
@@ -424,12 +316,6 @@ const AdminLayout: React.FC = () => {
             </div>
           </div>
 
-
-
-
-
-
-
           <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
             <header className="mb-3">
               <h2 className="text-xl font-semibold text-[#113F67]">
@@ -457,14 +343,13 @@ const AdminLayout: React.FC = () => {
           </div>
         </div>
       )}
-            {showNotification && (
+      {showNotification && (
         <NotificationModal
           onClose={() => setShowNotification(false)}
           notifications={notifications}
           onMarkAsRead={handleMarkAsRead}
           onDelete={handleDelete}
           onMarkAllAsRead={handleMarkAllAsRead}
-
         />
       )}
     </>

@@ -5,7 +5,6 @@ import API from "../../../api/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-// Define schema using Yup
 const schema = yup.object().shape({
   email: yup
     .string()

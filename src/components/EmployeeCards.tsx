@@ -16,11 +16,9 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({
   const handleEditClick = () => {
     navigate(`/employee/profile/`);
   };
-  
 
   return (
     <div className="relative flex items-center justify-between bg-blue-900 p-4 rounded-lg shadow-md hover:shadow-lg transition">
-      {/* Left side: profile image + name + role */}
       <div className="flex items-center gap-4">
         <img
           src={imageUrl}
@@ -33,7 +31,6 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({
         </div>
       </div>
 
-      {/* Right side: Edit button */}
       <button
         className="bg-yellow-500 px-5 py-2 rounded-sm cursor-pointer z-30 hover:bg-yellow-400"
         onClick={handleEditClick}
@@ -41,7 +38,6 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({
         Edit Profile
       </button>
 
-      {/* Arrow image positioned at top-right */}
       <img
         src={arrowImage}
         alt="arrow"

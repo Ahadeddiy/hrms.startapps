@@ -64,7 +64,7 @@ const LeaveRequestForm: React.FC = () => {
     >
       <h2 className="text-2xl font-bold text-center">Leave Request Form</h2>
 
-      {/* Leave Type & Day Type */}
+     
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block mb-2 font-semibold">Leave Type</label>
@@ -102,7 +102,6 @@ const LeaveRequestForm: React.FC = () => {
         </div>
       </div>
 
-      {/* Start Date & End Date */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block mb-2 font-semibold">Start Date</label>
@@ -162,7 +161,7 @@ const LeaveRequestForm: React.FC = () => {
         )}
       </div>
 
-      {/* Reason */}
+ 
       <div>
         <label className="block mb-2 font-semibold">Reason</label>
         <textarea
@@ -182,7 +181,7 @@ const LeaveRequestForm: React.FC = () => {
         )}
       </div>
 
-      {/* Submit Button */}
+      
       <div className="text-right">
         <button
           type="submit"

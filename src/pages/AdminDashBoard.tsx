@@ -38,7 +38,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchData();
   }, []); 
-  // Fetch employees and payrolls data
+  
   const fetchData = async () => {
       try {
         const empData = await fetchEmployees();
@@ -77,18 +77,7 @@ const AdminDashboard = () => {
             icon: <CalendarDays size={40} className="text-white" />,
             disabled: false,
           },
-          {
-            label: "Absent",
-            value: "5",
-            icon: <Users size={40} className="text-white" />,
-            disabled: false,
-          },
-          {
-            label: "Present",
-            value: "6",
-            icon: <Users size={40} className="text-white" />,
-            disabled: false,
-          },
+        
         ].map((card, idx) => (
           <div
             key={idx}
@@ -111,7 +100,6 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      {/* Employee List Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white shadow rounded-xl p-4 max-h-60 overflow-y-auto">
           <h3 className="text-lg font-bold mb-2 text-[#113F67]">Employees</h3>
@@ -155,7 +143,7 @@ const AdminDashboard = () => {
             )}
           </div>
         </div>
-        {/* Attendance Section (with timer and date) */}
+     
         <div>
           <AttendanceTracker showTimer={true} showDate={true} />
         </div>

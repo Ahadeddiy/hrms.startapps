@@ -13,7 +13,7 @@ const BackButton = ({ fallbackPath = "/dashboard", label = "Go Back" }) => {
   const handleBack = () => {
     if (history.length > 1) {
       const newHistory = [...history];
-      newHistory.pop(); // current page
+      newHistory.pop(); 
       const previousPath = newHistory[newHistory.length - 1];
 
       dispatch(popFromHistory());
