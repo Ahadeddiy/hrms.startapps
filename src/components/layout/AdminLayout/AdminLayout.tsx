@@ -198,6 +198,13 @@ const AdminLayout: React.FC = () => {
       console.error("Mark all as read error:", error);
     }
   };
+  const formatRole = (role: string) => {
+    if (role === "superadmin") return "Super/Admin";
+    if (role === "admin") return "Admin";
+    if (role === "hr") return "HR";
+    if (role === "employee") return "Employee";
+    return role.charAt(0).toUpperCase() + role.slice(1);
+  };
 
   return (
     <>
@@ -272,8 +279,9 @@ const AdminLayout: React.FC = () => {
         <main className="flex-1 px-6 py-4 overflow-y-auto bg-[#F3F9FB]">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold text-[#113F67]">
-              Welcome, {role.charAt(0).toUpperCase() + role.slice(1)}
+              Welcome, {formatRole(role)}
             </h1>
+
             <div className="flex items-center gap-4">
               <button
                 className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
