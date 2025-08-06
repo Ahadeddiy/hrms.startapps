@@ -18,13 +18,6 @@ const schema = yup.object().shape({
 });
 
 
-
-
-
-
-
-
-
 export const ChangePassword = () => {
   const {
     register,
@@ -48,7 +41,6 @@ export const ChangePassword = () => {
         token,
         oldPassword: data.oldPassword,
         newPassword: data.newPassword,
-        // confirmPassword: data.confirmPassword,
       });
 
       toast.success("Password changed successfully!");

@@ -45,7 +45,7 @@ const Login: React.FC = () => {
         email: payload.email,
         role: payload.role,
         employeeId: payload.employeeId,
-        // customPermissions: payload.customPermissions,
+        
         name: payload.name,
       };
 
@@ -80,17 +80,17 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left Panel */}
+     
       <div className="w-full md:w-1/2 flex flex-col justify-center px-6 py-10 bg-white relative">
-        {/* Logo Heading top-left */}
+      
         <h1 className="absolute top-6 left-6 text-xl font-bold text-[#113F67]">
           STARTAPPSS
         </h1>
 
-        {/* Form */}
+     
         <div className="w-full max-w-md mx-auto mt-6">
           <h2 className="text-3xl font-extrabold text-[#113F67] mb-6 text-center">
-            Welcome Back
+            Welcome 
           </h2>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -152,7 +152,7 @@ const Login: React.FC = () => {
             />
           </form>
 
-          {/* Signup Link */}
+          
           <p className="mt-6 text-center text-sm text-gray-600">
             Don’t have an account?{" "}
             <span
@@ -165,9 +165,9 @@ const Login: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Panel */}
+   
       <div className="hidden md:block md:w-1/2 relative text-white">
-        {/* Background */}
+     
         <img
           src={loginBg}
           alt="Background"
@@ -175,7 +175,7 @@ const Login: React.FC = () => {
         />
         <div className="absolute inset-0 bg-[#226597] opacity-80"></div>
 
-        {/* Text Overlay */}
+        
         <div className="absolute inset-0 z-10 flex flex-col justify-end items-start px-10 pb-20">
           <div className="max-w-md">
             <h1 className="text-xl lg:text-3xl font-semibold leading-snug text-left">

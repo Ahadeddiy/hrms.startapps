@@ -163,14 +163,11 @@ const SignUpPage: React.FC = () => {
               className="w-full p-2 rounded-md border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#87C0CD] cursor-pointer"
             >
               <option value="">-- Select Role --</option>
-              <option value="Admin">Admin</option>
+              <option value="Admin">Superadmin</option>
               {(role === "HR" || role === "SuperAdmin") && (
                 <option value="HR">HR</option>
               )}
-              <option value="Manager">Manager</option>
-              {(role === "HR" || role === "SuperAdmin") && (
-                <option value="Employee">Employee</option>
-              )}
+              
             </select>
             {errors.role && (
               <p className="text-red-500 text-sm mt-1">

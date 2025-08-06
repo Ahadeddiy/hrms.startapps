@@ -29,7 +29,6 @@ const AttendanceManagement = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [locationFilter, setLocationFilter] = useState("");
 
-  // Filter states - Admin View
   const [searchName, setSearchName] = useState("");
   const [roleFilter, setRoleFilter] = useState("All");
   const [adminStatusFilter, setAdminStatusFilter] = useState("All");
@@ -61,7 +60,6 @@ const AttendanceManagement = () => {
   const formatTime = (timeStr?: string) =>
     timeStr ? new Date(timeStr).toLocaleTimeString() : "--";
 
-  // 🔹 Filter logic - My Attendance
   const filteredMyAttendance = myAttendance.filter((rec) => {
     const checkInDate = rec.checkInTime ? new Date(rec.checkInTime) : null;
 
@@ -84,11 +82,8 @@ const AttendanceManagement = () => {
     return matchesDate && matchesStatus && matchesLocation;
   });
 
-  // 🔹 Filter logic - Admin Attendance
   const filteredTodayAttendance = todayAttendance.filter((rec) => {
-    const fullName = `${rec.user?.firstName || ""} ${
-      rec.user?.lastName || ""
-    }`;
+    const fullName = `${rec.user?.firstName || ""} ${rec.user?.lastName || ""}`;
     const matchesName = rec.user?.name
       ?.toLowerCase()
       .includes(searchName.toLowerCase());
@@ -105,13 +100,11 @@ const AttendanceManagement = () => {
 
   return (
     <div className="p-4 space-y-8">
-      {/* My Attendance */}
       <div className="bg-white rounded-xl p-4 shadow">
         <h2 className="text-lg font-semibold mb-4 text-[#113F67]">
           My Attendance History
         </h2>
 
-        {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-4">
           <input
             type="date"
@@ -141,18 +134,18 @@ const AttendanceManagement = () => {
             onChange={(e) => setLocationFilter(e.target.value)}
             className="border p-2 rounded"
           />
-          
+
           <button
-              onClick={() => {
-                setFromDate("");
-                setToDate("");
-                setStatusFilter("All");
-                setLocationFilter("");
-              }}
-              className="bg-[#113F67] text-white px-3 py-1 rounded hover:bg-[#226597]"
-            >
-              Clear Filters
-            </button>
+            onClick={() => {
+              setFromDate("");
+              setToDate("");
+              setStatusFilter("All");
+              setLocationFilter("");
+            }}
+            className="bg-[#113F67] text-white px-3 py-1 rounded hover:bg-[#226597]"
+          >
+            Clear Filters
+          </button>
         </div>
 
         <div className="overflow-x-auto">
@@ -195,14 +188,12 @@ const AttendanceManagement = () => {
         </div>
       </div>
 
-      {/* Admin View */}
       {isAdmin && (
         <div className="bg-white rounded-xl p-4 shadow">
           <h2 className="text-lg font-semibold mb-4 text-[#113F67]">
             Today's Attendance (All Employees)
           </h2>
 
-          {/* Filters */}
           <div className="flex flex-wrap gap-4 mb-4">
             <input
               type="text"
@@ -234,15 +225,15 @@ const AttendanceManagement = () => {
               <option>Checked-Out Only</option>
             </select>
             <button
-            onClick={() => {
-              setSearchName("");
-              setRoleFilter("All");
-              setAdminStatusFilter("All");
-            }}
-            className="bg-[#113F67] text-white px-3 py-1 rounded hover:bg-[#226597]"
-          >
-            Clear Filters
-          </button>
+              onClick={() => {
+                setSearchName("");
+                setRoleFilter("All");
+                setAdminStatusFilter("All");
+              }}
+              className="bg-[#113F67] text-white px-3 py-1 rounded hover:bg-[#226597]"
+            >
+              Clear Filters
+            </button>
           </div>
 
           <div className="overflow-x-auto">

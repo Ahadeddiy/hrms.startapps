@@ -5,7 +5,7 @@ import { RootState } from "../store/store";
 
 interface ProtectedRoutesProps {
   allowedRoles?: string[];
-  children?: React.ReactNode; // optional, in case someone uses <ProtectedRoutes><Component /></ProtectedRoutes>
+  children?: React.ReactNode;
 }
 
 const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({

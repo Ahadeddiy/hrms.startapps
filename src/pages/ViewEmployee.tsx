@@ -9,14 +9,12 @@ import BankDetailsForm from "../components/Form/UserCreationForm/BankDetailStep/
 import { getEmployeeById } from "../api/auth";
 
 const steps = [
-  // "Account Creation",
   "Basic Details",
   "Educational Details",
   "Bank Details",
 ];
 
 const stepComponents = [
-  // UserAccountCreationForm,
   BasicDetailsForm,
   EducationDetailsForm,
   BankDetailsForm,
@@ -33,12 +31,9 @@ const ViewEmployee = () => {
       try {
         const employee = await getEmployeeById(id);
 
-        // Clean the object to remove _id, __v, timestamps
+        
         const cleanedEmployee = {
-          // account: {
-          //   email: employee.account.email,
-          //   role: employee.account.role,
-          // },
+        
           basicDetails: {
             firstName: employee.basicDetails.firstName,
             lastName: employee.basicDetails.lastName,
@@ -73,7 +68,7 @@ const ViewEmployee = () => {
           },
         };
 
-        methods.reset(cleanedEmployee); // ✅ clean data passed here
+        methods.reset(cleanedEmployee); 
       } catch (error) {
         console.error("Failed to fetch employee:", error);
       } finally {
@@ -94,7 +89,7 @@ const ViewEmployee = () => {
         <Stepper steps={steps} activeStep={activeStep} />
 
         <div className="mt-8">
-          {/* 👇 Pass readOnly={true} to disable inputs */}
+    
           <CurrentStepComponent readOnly={true} />
         </div>
 

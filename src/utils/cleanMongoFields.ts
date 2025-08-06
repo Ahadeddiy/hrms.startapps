@@ -1,4 +1,3 @@
-// utils/cleanMongoFields.ts
 export function removeMongoMetaFields(obj: any): any {
   if (Array.isArray(obj)) {
     return obj.map(removeMongoMetaFields);

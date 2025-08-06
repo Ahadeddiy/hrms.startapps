@@ -20,7 +20,7 @@ export const ResetPasswordForm = () => {
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get("token");
   console.log(token)
-  // const token = queryParams.get("token");
+  
 
   const {
     register,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Loader } from "../../Loader/Loader";// Optional, or you can define a small spinner inside here
+import { Loader } from "../../Loader/Loader"; 
 
 interface ButtonProps {
   name: string;
