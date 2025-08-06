@@ -112,13 +112,13 @@ const EmployeeForm = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
             <button
-              onClick={() => (window.location.href = "/employee-management")}
+              onClick={() => (window.location.href = "/admin/employee-management")}
               className="bg-[#226597] text-white flex gap-2 px-6 py-2 rounded-lg cursor-pointer hover:bg-[#87C0CD] transition shadow-sm w-full sm:w-auto"
             >
               <UserPlus size={18} /> <p>Add User</p>
             </button>
             <button
-              onClick={() => (window.location.href = "/dashboard")}
+              onClick={() => (window.location.href = "/admin/dashboard")}
               className="bg-[#226597] text-white flex gap-2 px-6 py-2 rounded-lg cursor-pointer hover:bg-[#87C0CD] transition shadow-sm w-full sm:w-auto"
             >
               <LayoutDashboard size={18} /> <p>Dashboard</p>
