@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { set, useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import API from "../../../../api/auth";
 import { Loader } from "../../../Loader/Loader";
@@ -38,6 +38,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
     register,
     watch,
     formState: { errors },
+    clearErrors,
   } = useFormContext<FormValues>();
 
   const inputClass = `w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm text-sm focus:outline-none ${
@@ -48,6 +49,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { id } = useParams();
+  const [uploadSuccess, setuploadSuccess] = useState<boolean>(false);
 
   const departmentDesignationMap: Record<string, string[]> = {
     engineering: ["MERN-Stack Developer", "Data Engineer"],
@@ -56,6 +58,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
   };
   const selectedDepartment = watch("basicDetails.department");
   const designationOptions = departmentDesignationMap[selectedDepartment] || [];
+  const { setValue } = useFormContext<FormValues>();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -69,15 +72,26 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
     if (!selectedFile || !id) return alert("No file or user ID found");
     const formData = new FormData();
     formData.append("file", selectedFile);
+    setuploadSuccess(false);
     setIsLoading(true);
     try {
-      await API.post(`/api/users/upload-profile/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await API.post(
+        `/api/users/upload-profile/${id}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      const imageUrl = response.data.imageUrl;
+      setValue("basicDetails.profileImage", imageUrl);
+      setPreviewUrl(imageUrl);
       alert("Profile image uploaded successfully!");
+      setuploadSuccess(true);
+      clearErrors("basicDetails.profileImage");
     } catch (err) {
       console.error(err);
       alert("Upload failed.");
+      setuploadSuccess(false);
     } finally {
       setIsLoading(false);
     }
@@ -229,7 +243,7 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
             </label>
             <input
               {...register(`basicDetails.${field.name}` as const, {
-                 required: !readOnly ? "This field is required" : false,
+                required: !readOnly ? "This field is required" : false,
                 pattern: field.pattern
                   ? { value: field.pattern, message: field.patternMsg }
                   : undefined,
@@ -247,112 +261,144 @@ const BasicDetailsForm: React.FC<{ readOnly?: boolean }> = ({
           </div>
         ))}
 
-      {/* Joining Date */}
-      <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-700 mb-1">Joining Date</label>
-        <input
-          type="date"
-          {...register("basicDetails.joiningDate", {required: !readOnly ? "Joining Date is required" : false})}
-          disabled={readOnly}
-          className={inputClass}
-        />
-         <div className="h-5 mt-1">
-        {!readOnly && errors.basicDetails?.joiningDate?.message && (
-          <p className="text-red-500 text-sm">{errors.basicDetails.joiningDate.message}</p>
-        )}
-        </div>
-      </div>
-
-      {/* Department */}
-      <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-700 mb-1">Department</label>
-        <select
-          {...register("basicDetails.department",{ required: !readOnly ? "Department is required" : false,})}
-          disabled={readOnly}
-          className={inputClass}
-        >
-          <option value="">Select Department</option>
-          <option value="engineering">Engineering</option>
-          <option value="hr">HR</option>
-          <option value="sales">Sales</option>
-        </select>
-         <div className="h-5 mt-1">
-        {!readOnly && errors.basicDetails?.department?.message && (
-          <p className="text-red-500 text-sm">{errors.basicDetails.department.message}</p>
-        )}
-        </div>
-      </div>
-
-      {/* Designation */}
-      <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-700 mb-1">Designation</label>
-        <select
-          {...register("basicDetails.designation",{ required: !readOnly ? "Designation is required" : false,})}
-          disabled={readOnly || !selectedDepartment}
-          className={inputClass}
-        >
-          <option value="">Select Designation</option>
-          {designationOptions.map((designation) => (
-            <option key={designation} value={designation}>
-              {designation}
-            </option>
-          ))}
-        </select>
-              <div className="h-5 mt-1">
-        {!readOnly && errors.basicDetails?.designation?.message && (
-          <p className="text-red-500 text-sm">{errors.basicDetails.designation.message}</p>
-        )}
-        </div>
-      </div>
-
-      {/* Employment Type */}
-      <div className="flex flex-col">
-        <label className="text-sm font-medium text-gray-700 mb-1">Employment Type</label>
-        <select
-          {...register("basicDetails.employmentType",{ required: !readOnly ? "Employee Type is required" : false})}
-          disabled={readOnly}
-          className={inputClass}
-        >
-          <option value="">Select Type</option>
-          <option value="full-time">Full-time</option>
-          <option value="intern">Intern</option>
-          <option value="contract">Contract</option>
-        </select>
-         <div className="h-5 mt-1">
-        {!readOnly && errors.basicDetails?.employmentType?.message && (
-          <p className="text-red-500 text-sm">{errors.basicDetails.employmentType.message}</p>
-        )}
-        </div>
-      </div>
-
-      {/* Upload Profile Image */}
-      {!readOnly && (
-        <div className="md:col-span-3">
-          <label className="text-sm font-medium text-gray-700 mb-1">Upload Profile Image</label>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Joining Date
+          </label>
           <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="block w-full text-sm cursor-pointer text-gray-700 file:mr-4 file:py-2 file:px-4 file:border file:rounded file:border-gray-300 file:bg-white hover:file:bg-gray-100"
-            required
+            type="date"
+            {...register("basicDetails.joiningDate", {
+              required: !readOnly ? "Joining Date is required" : false,
+            })}
+            disabled={readOnly}
+            className={inputClass}
           />
-          {previewUrl && (
-            <img
-              src={previewUrl}
-              alt="Profile Preview"
-              className="mt-2 w-24 h-24 object-cover rounded-full border"
-            />
-          )}
-          <button
-            type="button"
-            onClick={handleUpload}
-            className="mt-2 bg-[#226597] hover:bg-[#1c4c7a] cursor-pointer text-white py-1.5 px-4 rounded-md"
-          >
-            {isLoading ? <Loader /> : "Upload"}
-          
-          </button>
+          <div className="h-5 mt-1">
+            {!readOnly && errors.basicDetails?.joiningDate?.message && (
+              <p className="text-red-500 text-sm">
+                {errors.basicDetails.joiningDate.message}
+              </p>
+            )}
+          </div>
         </div>
-      )}
+
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Department
+          </label>
+          <select
+            {...register("basicDetails.department", {
+              required: !readOnly ? "Department is required" : false,
+            })}
+            disabled={readOnly}
+            className={inputClass}
+          >
+            <option value="">Select Department</option>
+            <option value="engineering">Engineering</option>
+            <option value="hr">HR</option>
+            <option value="sales">Sales</option>
+          </select>
+          <div className="h-5 mt-1">
+            {!readOnly && errors.basicDetails?.department?.message && (
+              <p className="text-red-500 text-sm">
+                {errors.basicDetails.department.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Designation
+          </label>
+          <select
+            {...register("basicDetails.designation", {
+              required: !readOnly ? "Designation is required" : false,
+            })}
+            disabled={readOnly || !selectedDepartment}
+            className={inputClass}
+          >
+            <option value="">Select Designation</option>
+            {designationOptions.map((designation) => (
+              <option key={designation} value={designation}>
+                {designation}
+              </option>
+            ))}
+          </select>
+          <div className="h-5 mt-1">
+            {!readOnly && errors.basicDetails?.designation?.message && (
+              <p className="text-red-500 text-sm">
+                {errors.basicDetails.designation.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Employment Type
+          </label>
+          <select
+            {...register("basicDetails.employmentType", {
+              required: !readOnly ? "Employee Type is required" : false,
+            })}
+            disabled={readOnly}
+            className={inputClass}
+          >
+            <option value="">Select Type</option>
+            <option value="full-time">Full-time</option>
+            <option value="intern">Intern</option>
+            <option value="contract">Contract</option>
+          </select>
+          <div className="h-5 mt-1">
+            {!readOnly && errors.basicDetails?.employmentType?.message && (
+              <p className="text-red-500 text-sm">
+                {errors.basicDetails.employmentType.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {!readOnly && (
+          <div className="md:col-span-3">
+            <label className="text-sm font-medium text-gray-700 mb-1">
+              Upload Profile Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="block w-full text-sm cursor-pointer text-gray-700 file:mr-4 file:py-2 file:px-4 file:border file:rounded file:border-gray-300 file:bg-white hover:file:bg-gray-100"
+              required={true}
+            />
+            {previewUrl && (
+              <img
+                src={previewUrl}
+                alt="Profile Preview"
+                className="mt-2 w-24 h-24 object-cover rounded-full border"
+              />
+            )}
+            <button
+              type="button"
+              onClick={handleUpload}
+              className="mt-2 bg-[#226597] hover:bg-[#1c4c7a] cursor-pointer text-white py-1.5 px-4 rounded-md"
+            >
+              {isLoading ? <Loader /> : "Upload"}
+            </button>
+            {uploadSuccess && (
+              <p className="text-green-500 text-sm mt-2">
+                Profile image uploaded successfully!
+              </p>
+            )}
+          </div>
+        )}
+        <div className="h-5 mt-1">
+          {!readOnly && errors.basicDetails?.profileImage?.message && (
+            <p className="text-red-500 text-sm">
+              {errors.basicDetails.profileImage.message}
+            </p>
+          )}
+        </div>
       </div>
     </>
   );

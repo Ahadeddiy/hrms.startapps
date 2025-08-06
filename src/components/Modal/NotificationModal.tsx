@@ -85,14 +85,16 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   );
 
   return (
-    <div className="fixed top-16 right-6 z-50 w-80 bg-white rounded-xl shadow-xl border border-gray-300">
+    <div className="fixed top-16 right-4 sm:right-6 z-50 w-[90%] max-w-sm sm:w-80 bg-white rounded-xl shadow-xl border border-gray-300">
       <div className="flex justify-between items-center px-4 py-2 border-b border-gray-200">
-        <h2 className="font-bold text-[#113F67]">Notifications</h2>
-        <div className="flex items-center gap-3">
+        <h2 className="font-bold text-[#113F67] text-sm sm:text-base">
+          Notifications
+        </h2>
+        <div className="flex items-center gap-2 sm:gap-3">
           {unread.length > 0 && (
             <button
               onClick={onMarkAllAsRead}
-              className="text-xs text-blue-600 hover:underline"
+              className="text-xs sm:text-sm text-blue-600 hover:underline whitespace-nowrap"
             >
               Mark all as read
             </button>
@@ -103,7 +105,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
         </div>
       </div>
 
-      <div className="max-h-96 overflow-y-auto">
+      <div className="max-h-80 sm:max-h-96 overflow-y-auto">
         {notifications.length === 0 ? (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             No notifications yet

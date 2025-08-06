@@ -22,6 +22,11 @@ const validationSchema = Yup.object({
     designation: Yup.string().required(),
     department: Yup.string().required(),
     employmentType: Yup.string().required(),
+      profileImage: Yup.mixed()
+    .required("Profile image is required")
+    .test("fileExists", "You must upload an image", value => {
+      return value && value.length > 0;
+    }),
   }),
   bankDetails: Yup.object({
     bankName: Yup.string().required(),

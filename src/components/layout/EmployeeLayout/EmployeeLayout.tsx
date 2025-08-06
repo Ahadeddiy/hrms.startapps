@@ -159,7 +159,7 @@ const EmployeeLayout: React.FC = () => {
                   to={path}
                   end={label === "Dashboard"}
                   className={({ isActive }) =>
-                    `flex items-center md:justify-start justify-center gap-3 px-0 md:px-4 py-2 rounded-md text-base font-medium transition-all ${
+                    `flex items-center md:justify-start justify-center gap-3 px-1 md:px-4 py-2 rounded-md text-base font-medium transition-all ${
                       isActive
                         ? "bg-[#226597] text-white font-semibold"
                         : "hover:bg-[#226597] hover:text-white text-white"
@@ -175,7 +175,8 @@ const EmployeeLayout: React.FC = () => {
 
           <button
             onClick={handleLogout}
-            className="mt-6 flex items-center cursor-pointer justify-center md:justify-start gap-3 px-0 md:px-4 py-3 bg-[#226597] hover:bg-[#87C0CD] text-white text-base font-medium rounded-md"
+            className="mt-6 w-full flex items-center justify-center md:justify-start gap-3 px-0 md:px-4 py-2 
+             bg-[#226597] hover:bg-[#87C0CD] text-white text-base font-medium rounded-md"
           >
             <LogOut size={20} className="text-white" />
             <span className="hidden md:inline">Logout</span>

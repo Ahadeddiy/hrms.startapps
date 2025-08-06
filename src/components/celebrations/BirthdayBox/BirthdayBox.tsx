@@ -39,7 +39,7 @@ const BirthdayBox: React.FC = () => {
   return (
     <div className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-6 border border-blue-100">
       <h2 className="text-3xl font-bold text-center text-[#113F67] mb-6 border-b pb-2 border-blue-200">
-        🎉 Today’s Birthdays
+       Today’s Birthdays
       </h2>
 
       {loading ? (
