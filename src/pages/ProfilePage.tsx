@@ -84,7 +84,29 @@ const Profile: React.FC = () => {
       toast.error("Phone number must be 10 digits");
       return;
     }
+    const handleProfileUpdate = async (
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
+      const formData = new FormData();
+      formData.append("profileImage", file);
+      try {
+        await API.post(`/api/users/employee/${userId}/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        setProfile((prev: any) => ({
+          ...prev,
+          profileImage: URL.createObjectURL(file),
+        }));
+        toast.success("Profile image updated successfully");
+      } catch (error) {
+        toast.error("Failed to update profile image");
+      }
+    };
     const structuredPayload = {
       basicDetails: {
         firstName: profile.firstName,
@@ -187,7 +209,23 @@ const Profile: React.FC = () => {
               alt="Profile"
               className="w-16 h-16 sm:w-18 sm:h-15 md:w-22 md:h-22 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full border-4 border-gray-200 object-cover"
             />
-
+            {isEditing && (
+              <>
+                <label
+                  htmlFor="profileImageInput"
+                  className="mt-2 text-xs px-3 py-1 bg[#87C0CD] text-white rounded-full cursor-pointer transition hover:bg-[#113F67]"
+                >
+                  Edit Photo
+                </label>
+                <input
+                  type="file"
+                  id="profileImageInput"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  className="hidden"
+                />
+              </>
+            )}
             <div className="flex flex-col items-center md:items-start gap-0 sm:gap-1">
               <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight text-center md:text-left">
                 {profile?.firstName + " " + profile?.lastName}
