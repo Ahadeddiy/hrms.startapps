@@ -47,15 +47,11 @@ const RegisterPage: React.FC = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     try {
       const formData = data;
-      const res = await API.post(
-        "/api/users/register",
-        formData
-      );
+      const res = await API.post("/api/users/register", formData);
       toast.success("Account created successfully!");
       const userId = res.data.userId;
       setTimeout(() => navigate(`/admin/add-employee-details/${userId}`), 1500);
@@ -74,7 +70,6 @@ const RegisterPage: React.FC = () => {
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Email */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
               Email
@@ -91,7 +86,6 @@ const RegisterPage: React.FC = () => {
             )}
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
               Password
@@ -109,7 +103,6 @@ const RegisterPage: React.FC = () => {
             )}
           </div>
 
-          {/* Role */}
           {!isFirstUser && (
             <div>
               <label className="block text-gray-700 font-medium mb-1">
@@ -138,7 +131,6 @@ const RegisterPage: React.FC = () => {
             </div>
           )}
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={isLoading}
@@ -148,7 +140,6 @@ const RegisterPage: React.FC = () => {
           </button>
         </form>
 
-        {/* Redirect */}
         <p className="text-center mt-6 text-gray-600">
           Already have an account?{" "}
           <Link
@@ -159,7 +150,7 @@ const RegisterPage: React.FC = () => {
           </Link>
         </p>
       </div>
-</div>
+    </div>
   );
 };
 

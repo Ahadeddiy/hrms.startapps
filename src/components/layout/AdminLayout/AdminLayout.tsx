@@ -199,7 +199,7 @@ const AdminLayout: React.FC = () => {
     }
   };
   const formatRole = (role: string) => {
-    if (role === "superadmin") return "Super/Admin";
+    if (role === "superadmin") return "Super-Admin";
     if (role === "admin") return "Admin";
     if (role === "hr") return "HR";
     if (role === "employee") return "Employee";
@@ -236,7 +236,7 @@ const AdminLayout: React.FC = () => {
                   onClick={(e) => {
                     if (disabled) {
                       e.preventDefault();
-                      alert(`${label} is under progress 🚧`);
+                      alert(`${label} is under progress `);
                     } else {
                       setPageTitle(label);
                     }
@@ -256,10 +256,10 @@ const AdminLayout: React.FC = () => {
 
                   {disabled && (
                     <span
-                      className="ml-2 text-xs bg-[#113F67] text-white font-semibold px-2 py-0.5 rounded-full"
+                      className="ml-2 text-xs bg-[#113F67] text-white font-semibold px-1 py-0.1 rounded-full"
                       title="Under Progress"
                     >
-                      🚧
+                      
                     </span>
                   )}
                 </NavLink>
@@ -278,7 +278,7 @@ const AdminLayout: React.FC = () => {
 
         <main className="flex-1 px-6 py-4 overflow-y-auto bg-[#F3F9FB]">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-[#113F67]">
+            <h1 className="lg:text-2xl sm:text-xl font-bold text-[#113F67]">
               Welcome, {formatRole(role)}
             </h1>
 
@@ -288,8 +288,18 @@ const AdminLayout: React.FC = () => {
                 onClick={() => setShowNotification((prev) => !prev)}
               >
                 <Bell size={20} className="text-[#113F67]" />
+
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 left-5 text-xs bg-red-600 text-white font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                  <span
+                    className="
+          absolute top-1 left-5 
+          text-xs sm:text-[10px] 
+          bg-red-600 text-white font-bold 
+          w-5 h-5 sm:w-4 sm:h-4 
+          flex items-center justify-center 
+          rounded-full
+        "
+                  >
                     {unreadCount}
                   </span>
                 )}

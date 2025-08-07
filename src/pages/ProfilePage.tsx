@@ -45,8 +45,8 @@ const Profile: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const { id } = useParams();
   const userId = id || user?.userId;
-const userRole = user?.role;
-const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
+  const userRole = user?.role;
+  const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
 
   useEffect(() => {
     API.get(`/api/users/employee/${userId}`)
@@ -84,7 +84,29 @@ const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
       toast.error("Phone number must be 10 digits");
       return;
     }
+    const handleProfileUpdate = async (
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
+      const formData = new FormData();
+      formData.append("profileImage", file);
+      try {
+        await API.post(`/api/users/employee/${userId}/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        setProfile((prev: any) => ({
+          ...prev,
+          profileImage: URL.createObjectURL(file),
+        }));
+        toast.success("Profile image updated successfully");
+      } catch (error) {
+        toast.error("Failed to update profile image");
+      }
+    };
     const structuredPayload = {
       basicDetails: {
         firstName: profile.firstName,
@@ -136,10 +158,11 @@ const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
     type: string = "text",
     maskType?: string
   ) => {
-    
     const isEditable =
-  isEditing &&
-  (canEditAll ? fullEditableFields.includes(name) : basicEditableFields.includes(name));
+      isEditing &&
+      (canEditAll
+        ? fullEditableFields.includes(name)
+        : basicEditableFields.includes(name));
 
     const isMasked = maskedFields.includes(name);
     const isDateField = type === "date";
@@ -171,9 +194,8 @@ const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
   return (
     <div className="max-w-8xl mx-auto px-6 py-2 bg-white rounded-2xl">
       <div className="flex justify-end items-center pb-2">
-        <div className="flex items-center w-full justify-between bg-[#113F67] p-4 rounded-lg shadow-md hover:shadow-lg transition">
-
-          <div className="flex  items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between w-full bg-[#113F67] p-4 sm:p-6 gap-4 sm:gap-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+          <div className="flex flex-col sm:flex-col md:flex-row items-center gap-4 w-full md:w-auto">
             <img
               src={
                 profile.profileImage
@@ -185,21 +207,39 @@ const canEditAll = ["HR", "Admin", "SuperAdmin"].includes(userRole);
                   : "/default-avatar.png"
               }
               alt="Profile"
-              className="w-24 h-24 rounded-full border-4 border-gray-200"
+              className="w-16 h-16 sm:w-18 sm:h-15 md:w-22 md:h-22 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full border-4 border-gray-200 object-cover"
             />
-            <div className="flex flex-col gap-1 items-start">
-              <h3 className="md:text-2xl font-semibold text-white">
+            {isEditing && (
+              <>
+                <label
+                  htmlFor="profileImageInput"
+                  className="mt-2 text-xs px-3 py-1 bg[#87C0CD] text-white rounded-full cursor-pointer transition hover:bg-[#113F67]"
+                >
+                  Edit Photo
+                </label>
+                <input
+                  type="file"
+                  id="profileImageInput"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  className="hidden"
+                />
+              </>
+            )}
+            <div className="flex flex-col items-center md:items-start gap-0 sm:gap-1">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight text-center md:text-left">
                 {profile?.firstName + " " + profile?.lastName}
               </h3>
-              <p className="md:text-lg text-gray-300">{profile?.designation}</p>
+              <p className="text-sm sm:text-base md:text-lg text-gray-300 text-center md:text-left">
+                {profile?.designation}
+              </p>
             </div>
           </div>
 
-       
           <button
             type="button"
             onClick={() => setIsEditing((prev) => !prev)}
-            className="text-sm flex gap-2 items-center cursor-pointer font-medium text-white px-4 py-2 rounded-md transition hover:text-gray-100"
+            className="text-sm flex gap-2 items-center cursor-pointer font-medium text-white px-4 py-2 rounded-md transition hover:text-gray-100 mt-2 md:mt-0"
           >
             {isEditing ? <X /> : <Edit />}
           </button>

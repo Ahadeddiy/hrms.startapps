@@ -121,20 +121,21 @@ const AttendanceTracker: React.FC<AttendanceTrackerProps> = ({
 
   return (
     <div className="bg-white shadow rounded-xl p-4 w-full flex flex-col items-center">
-      <img
-        src={user?.profileImg || userimg}
-        alt="User"
-        className="w-14 h-14 rounded-full mb-2 object-cover"
-      />
-      <p className="text-[#113F67] font-semibold text-sm">
-        {user?.firstName} {user?.lastName}
-      </p>
-      <p className="text-[#113F67] text-xs mb-1">
-        {user?.role || "Employee"}
-      </p>
-      <p className="text-[#113F67] text-sm font-medium mt-2">
-        Status: <span className="text-[#226597]">{status}</span>
-      </p>
+    <img
+  src={user?.profileImg || userimg}
+  alt="User"
+  className="w-10 h-10 sm:w-14 sm:h-14 rounded-full mb-2 object-cover"
+/>
+<p className="text-[#113F67] font-semibold text-sm">
+  {user?.firstName} {user?.lastName}
+</p>
+<p className="text-[#113F67] text-xs mb-1">
+  {user?.role || "Employee"}
+</p>
+<p className="text-[#113F67] text-sm font-medium mt-2">
+  Status: <span className="text-[#226597]">{status}</span>
+</p>
+
 
       {showDate && attendanceDate && (
         <p className="text-[#113F67] text-xs mt-1">Date: {attendanceDate}</p>
@@ -146,27 +147,28 @@ const AttendanceTracker: React.FC<AttendanceTrackerProps> = ({
       />
 
       {showTimer && isCheckedIn && (
-        <div className="flex justify-center gap-2 text-black font-mono text-lg mt-1">
-          {getTimer()
-            .split(":")
-            .map((val, i) => (
-              <React.Fragment key={i}>
-                <div className="bg-[#F3F9FB] px-3 py-1 rounded-md border border-[#87C0CD]">
-                  {val}
-                </div>
-                {i < 2 && <span>:</span>}
-              </React.Fragment>
-            ))}
-        </div>
-      )}
+  <div className="flex justify-center gap-2 text-black font-mono text-sm sm:text-lg mt-1">
+    {getTimer()
+      .split(":")
+      .map((val, i) => (
+        <React.Fragment key={i}>
+          <div className="bg-[#F3F9FB] px-2 sm:px-3 py-1 rounded-md border border-[#87C0CD]">
+            {val}
+          </div>
+          {i < 2 && <span>:</span>}
+        </React.Fragment>
+      ))}
+  </div>
+)}
 
-      <button
-        onClick={handleClick}
-        disabled={locationLoading}
-        className="mt-2 px-4 py-1 rounded-md border cursor-pointer border-[#226597] text-[#226597] font-semibold hover:bg-[#87C0CD]/20 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isCheckedIn ? "Check-out" : "Check-in"}
-      </button>
+<button
+  onClick={handleClick}
+  disabled={locationLoading}
+  className="mt-2 px-3 py-1 sm:px-4 sm:py-1 rounded-md border cursor-pointer border-[#226597] text-[#226597] text-sm sm:text-base font-semibold hover:bg-[#87C0CD]/20 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {isCheckedIn ? "Check-out" : "Check-in"}
+</button>
+
     </div>
   );
 };
