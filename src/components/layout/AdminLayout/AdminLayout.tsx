@@ -20,7 +20,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../feature/user/userSlice";
 import { RootState } from "../../../store/store";
-import profileImage from "../../../assets/userlogo.png";
+import userProfile from "../../../assets/userlogo.png";
 import { ChangePassword } from "../../ChangePassword/ChangePassoword";
 import NotificationModal from "../../Modal/NotificationModal";
 import { fetchNotifications } from "../../../api/notification";
@@ -30,6 +30,7 @@ import {
   deleteNotification,
 } from "../../../api/notification";
 import BackButton from "../../common/BackButtonComp/BackButton";
+import { getProfileImage } from "../../../api/auth";
 
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const AdminLayout: React.FC = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [profileImage,setProfileImage]= useState("");
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
     {}
   );
@@ -198,6 +200,19 @@ const AdminLayout: React.FC = () => {
       console.error("Mark all as read error:", error);
     }
   };
+
+  useEffect(()=>{
+      const getProfile = async (id:string) =>{
+      try{
+        const imageURL = await getProfileImage(id)
+        setProfileImage(imageURL)
+      }catch(error){
+        console.log(error)
+      }
+    }
+    getProfile(id)
+    },[])
+    
   const formatRole = (role: string) => {
     if (role === "superadmin") return "Super-Admin";
     if (role === "admin") return "Admin";
@@ -212,7 +227,7 @@ const AdminLayout: React.FC = () => {
         <aside className="w-16 md:w-72 bg-[#113F67] text-white flex flex-col p-4 shadow-lg transition-all duration-300">
           <div className="flex items-center gap-4 p-0 md:p-3 bg-transparent md:bg-gray-300 lg:rounded-xl mb-6 font-bold text-[#113F67]">
             <img
-              src={user?.profileImage || profileImage}
+              src={profileImage || userProfile}
               alt="Profile"
               className="w-10 h-10 md:w-10 md:h-10 lg:w-14 lg:h-14 rounded-full object-cover"
             />
