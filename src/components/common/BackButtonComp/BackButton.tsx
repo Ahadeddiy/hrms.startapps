@@ -9,8 +9,7 @@ const BackButton = ({ fallbackPath = "/dashboard", label = "Go Back" }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const history = useSelector((state: RootState) => state.navigation.history);
-
-  const handleBack = () => {
+   const handleBack = () => {
     if (history.length > 1) {
       const newHistory = [...history];
       newHistory.pop(); 

@@ -26,6 +26,7 @@ import {
   markNotificationAsRead,
   deleteNotification,
 } from "../../../api/notification";
+import BackButton from "../../common/BackButtonComp/BackButton";
 
 const EmployeeLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const EmployeeLayout: React.FC = () => {
     { label: string; path: string; icon: React.ElementType }[]
   > = {
     Employee: [
-      { label: "Dashboard", path: "/employee", icon: LayoutDashboard },
+      { label: "Dashboard", path: "/employee/dashboard", icon: LayoutDashboard },
       { label: "Attendance", path: "/employee/attendance", icon: UserCheck },
       {
         label: "Leave Requests",
@@ -225,9 +226,11 @@ const EmployeeLayout: React.FC = () => {
               </div>
             </div>
           </div>
-
           <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
-            <header>
+            <header className={`flex mb-3 ${location.pathname!=="/employee/dashboard"} ? "gap-2":"gap-4"`}>
+              {location.pathname!=="/employee/dashboard" && (
+                <BackButton/>
+              )}
               <h2 className="text-xl font-semibold text-[#113F67]">
                 {pageTitle}
               </h2>
