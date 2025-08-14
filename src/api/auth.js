@@ -1,4 +1,5 @@
 import axios from "axios";
+import { User } from "lucide-react";
 const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
@@ -41,11 +42,13 @@ export const login = async (data) => {
   try {
     const response = await API.post("/api/users/login", data);
     const { token, user } = response.data;
+    console.log(user)
 
     if (token && user) {
       localStorage.setItem("token", token);
       localStorage.setItem("role", user.role);
       localStorage.setItem("userId", user._id);
+      localStorage.setItem("profileImage", user.profileImage);
     }
 
     return response.data;
