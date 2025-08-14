@@ -29,6 +29,7 @@ import {
   markNotificationAsRead,
   deleteNotification,
 } from "../../../api/notification";
+import BackButton from "../../common/BackButtonComp/BackButton";
 
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,6 @@ const AdminLayout: React.FC = () => {
         setShowSettings(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -335,7 +335,10 @@ const AdminLayout: React.FC = () => {
           </div>
 
           <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
-            <header className="mb-3">
+            <header className={`mb-3 flex ${location.pathname!=="/admin/dashboard" ?"gap-2" :"gap-4" }`}>
+              {location.pathname !== "/admin/dashboard" && ( 
+                
+                <BackButton/>)}
               <h2 className="text-xl font-semibold text-[#113F67]">
                 {pageTitle}
               </h2>
