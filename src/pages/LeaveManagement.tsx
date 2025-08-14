@@ -619,14 +619,17 @@ const LeaveManagement: React.FC = () => {
 
   return (
     <div className="overflow-x-auto p-2">
-      <div className="flex items-center justify-between">
-        <button
+      <div className={`flex gap-2 items-center ${role!=="SuperAdmin"? 'justify-between':'justify-end'}`}>
+       { (role === "HR" || role === "Admin" || role==="Manager")&& (
+        <button 
           onClick={handleNavigateLeaveForm}
           className="bg-[#226597] hover:bg-[#113F67] cursor-pointer text-white px-6 py-2 rounded-md text-sm font-medium shadow transition"
         >
           + Request Leave
         </button>
+       )
 
+       } 
         <div className="relative" ref={dropdownRef}>
           <div className="flex justify-end items-center gap-4 mt-4">
             <input
