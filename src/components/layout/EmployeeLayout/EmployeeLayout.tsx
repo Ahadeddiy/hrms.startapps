@@ -16,7 +16,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../feature/user/userSlice";
 import { RootState } from "../../../store/store";
-import profileImage from "../../../assets/user-alt.svg";
+import userProfile from "../../../assets/user-alt.svg";
 import { getEmployeeById } from "../../../api/auth";
 import { ChangePassword } from "../../ChangePassword/ChangePassoword";
 import { fetchNotifications } from "../../../api/notification";
@@ -27,6 +27,7 @@ import {
   deleteNotification,
 } from "../../../api/notification";
 import BackButton from "../../common/BackButtonComp/BackButton";
+import { getProfileImage } from "../../../api/auth";
 
 const EmployeeLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const EmployeeLayout: React.FC = () => {
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [profileImage,setProfileImage]=useState("");
 
   const role = user?.role || "Employee";
   const id = user?.userId;
@@ -118,14 +120,27 @@ const EmployeeLayout: React.FC = () => {
       console.error("Mark all as read error:", error);
     }
   };
-
+  
+  useEffect(()=>{
+    const getProfile = async (id:string) =>{
+    try{
+      const imageURL = await getProfileImage(id)
+      setProfileImage(imageURL)
+    }catch(error){
+      console.log(error)
+    }
+  }
+  getProfile(id)
+  },[])
+  
+  
   return (
     <>
       <div className="flex h-screen bg-[#F3F9FB]">
         <aside className="w-16 md:w-72 bg-[#113F67] text-white flex flex-col items-center md:items-stretch p-4 shadow-lg transition-all duration-300">
           <div className="hidden md:flex items-center gap-4 p-3 bg-[#226597] rounded-xl mb-6">
             <img
-              src={employeeData?.profileImg || profileImage}
+              src={profileImage||userProfile}
               alt="Profile"
               className="w-14 h-14 rounded-full object-cover border-2 border-white p-0.5"
             />
