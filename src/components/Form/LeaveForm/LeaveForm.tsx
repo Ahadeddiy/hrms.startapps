@@ -7,9 +7,10 @@ import { useSelector } from "react-redux";
 
 interface LeaveRequest {
   leaveType: "sick" | "casual" | "work" ;
-  dayType: "fullday" | "halfday";
+  dayType: "fullday" | "halfday" | "compensatory";
   startDate: string;
   endDate?: string;
+  leavingTime?:string;
   reason: string;
 }
 
@@ -93,6 +94,7 @@ const LeaveRequestForm: React.FC = () => {
             <option value="">Select Day Type</option>
             <option value="fullday">Full Day</option>
             <option value="halfday">Half Day</option>
+            <option value="compensatory">Compensatory Day</option>
           </select>
           {errors.dayType && (
             <p className="text-red-500 text-sm mt-1">
@@ -130,11 +132,29 @@ const LeaveRequestForm: React.FC = () => {
             </p>
           )}
         </div>
+        {dayType === "compensatory" && (
+          <div>
+            <label className="block mb-2 font-semibold">Leaving Time</label>
+            <input
+              type="time"
+              {...register("leavingTime", {
+                required: "Leaving Time is required",
+                })}
+              min={today}
+              className="w-full border cursor-pointer border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#226597]"
+            />
+            {errors.endDate && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.endDate.message}
+              </p>
+            )}
+          </div>
+        )}
 
         {dayType === "fullday" && (
           <div>
             <label className="block mb-2 font-semibold">End Date</label>
-            <input
+            <input 
               type="date"
               {...register("endDate", {
                 required: "End date is required",
@@ -150,7 +170,7 @@ const LeaveRequestForm: React.FC = () => {
                 },
               })}
               min={today}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#226597]"
+              className="w-full border cursor-pointer border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#226597]"
             />
             {errors.endDate && (
               <p className="text-red-500 text-sm mt-1">
