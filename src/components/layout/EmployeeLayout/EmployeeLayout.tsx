@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -132,6 +132,8 @@ const EmployeeLayout: React.FC = () => {
   }
   getProfile(id)
   },[])
+
+  const bellButtonRef = useRef()
   
   
   return (
@@ -208,6 +210,7 @@ const EmployeeLayout: React.FC = () => {
               <button
                 className="relative p-2 rounded-full bg-white hover:bg-[#87C0CD] shadow-sm cursor-pointer"
                 onClick={() => setShowNotification((prev) => !prev)}
+                ref={bellButtonRef}
               >
                 <Bell size={20} className="text-[#113F67]" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
@@ -232,7 +235,7 @@ const EmployeeLayout: React.FC = () => {
                         setShowChangePasswordModal(true);
                         setShowSettings(false);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm "
+                      className="w-full z-50 px-4 py-2 text-left text-sm "
                     >
                       Change Password
                     </button>
