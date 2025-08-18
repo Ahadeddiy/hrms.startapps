@@ -113,6 +113,7 @@ export const getProfileImage = async (userId) => {
   }
 };
 
+
 // Delete user
 export const deleteUser = async (userId) => {
   try {
