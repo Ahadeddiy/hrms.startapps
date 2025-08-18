@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   X,
   Cake,
@@ -49,6 +49,21 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 }) => {
   const unread = notifications.filter((n) => !n.isRead);
   const read = notifications.filter((n) => n.isRead);
+  const notificationModalRef = useRef(null)
+
+
+  useEffect(()=>{
+      const handleClickOutside = (event) =>{
+      if(notificationModalRef.current && !notificationModalRef.current.contains(event.target)){
+        onClose()
+      }
+  }
+  document.addEventListener('mousedown',handleClickOutside)
+  return () =>{
+    document.removeEventListener('mousedown', handleClickOutside);
+  }
+        
+  },[onClose])
 
   const renderNotification = (n: Notification) => (
     <div
@@ -85,7 +100,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   );
 
   return (
-    <div className="fixed top-16 right-4 sm:right-6 z-50 w-[90%] max-w-sm sm:w-80 bg-white rounded-xl shadow-xl border border-gray-300">
+    <div className="fixed top-16 right-4 sm:right-6 z-50 w-[90%] max-w-sm sm:w-80 bg-white rounded-xl shadow-xl border border-gray-300" ref={notificationModalRef}>
       <div className="flex justify-between items-center px-4 py-2 border-b border-gray-200">
         <h2 className="font-bold text-[#113F67] text-sm sm:text-base">
           Notifications
