@@ -25,24 +25,11 @@ import { ForgotPasswordForm } from "../components/Form/ForgotPasswordForm/Forgot
 import { ResetPasswordForm } from "../components/Form/ResetPasswordForm/ResetPasswordForm";
 import EmailSentMessge from "../components/Messages/EmailSentMessge";
 import RegisterPage from "../pages/RegisterPage";
-import { useLocation } from "react-router-dom";
-import { pushToHistory } from "../feature/navigation/navigationSlice";
-import { useDispatch } from "react-redux";
-
-
-const RouteTracker = () =>{
-  const location = useLocation()
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(pushToHistory(location.pathname))
-  },[location.pathname])
-  return null
-}
+import CompanyPolicypage from "../pages/CompanyPolicypage";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
-    <RouteTracker/>
       <Routes>
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
@@ -65,7 +52,7 @@ const AppRouter = () => {
           <Route path="attendance" element={<AttendanceManagement />} />
           <Route path="add-employee" element={<RegisterPage />} />
           <Route
-            path="/admin/add-employee-details/:id"
+            path="add-employee-details/:id"
             element={<EmployeeForm />}
           />
           <Route path="leave-requests" element={<LeaveRequests />} />
@@ -76,6 +63,7 @@ const AppRouter = () => {
           <Route path="reports" element={<Reports />} />
           <Route path="/admin/employee/:id" element={<Profile />} />
           <Route path="/admin/employee/edit/:id" element={<Profile />} />
+            <Route path="company-policy" element={<CompanyPolicypage />} />
         </Route>
 
         <Route
@@ -86,13 +74,14 @@ const AppRouter = () => {
             </ProtectedRoutes>
           }
         >
-          <Route path="dashboard" element={<EmployeeDashboard />} />
+          <Route index element={<EmployeeDashboard />} />
           <Route path="attendance" element={<AttendanceManagement />} />
           <Route path="leaves" element={<EmployeeLeaveDashboard />} />
           <Route path="request-leave" element={<LeaveRequestForm />} />
 
           <Route path="approval-history" element={<ApprovalHistory />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="company-policy" element={<CompanyPolicypage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />
