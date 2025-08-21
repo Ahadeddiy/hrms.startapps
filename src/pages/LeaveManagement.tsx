@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, use } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { MoreVertical, ListFilter, ChevronDown } from "lucide-react";
 import { getLeaves, updateStatus as updateLeaveStatusAPI } from "../api/leave";
 import { LeaveEntry } from "../api/leave";
@@ -32,9 +32,8 @@ const LeaveManagement: React.FC = () => {
   const itemsPerPage = 10;
 
   const dropdownRef = useRef(null);
-  const { user } = useSelector((state: RootState) => state.user);
-  const role = user?.role
-  console.log(role)
+  const user = useSelector((state: RootState) => state.user);
+  const role = user?.role;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -129,20 +128,17 @@ const LeaveManagement: React.FC = () => {
   const totalPages = Math.ceil(filteredLeaves.length / itemsPerPage);
 
   return (
-    <div className="overflow-x-auto p-2">
-      <div className={`flex sm:flex-wrap md:flex-wrap gap-2 items-center ${role!=="SuperAdmin"? 'justify-between':'justify-end'}`}>
-       { (role === "HR" || role === "Admin" || role==="Manager")&& (
-        <button 
+    <div className="overflow-x-auto p-2 min-h-[600px]">
+      <div className="flex items-center justify-between">
+        <button
           onClick={handleNavigateLeaveForm}
           className="bg-[#226597] hover:bg-[#113F67] cursor-pointer text-white px-6 py-2 rounded-md text-sm font-medium shadow transition"
         >
           + Request Leave
         </button>
-       )
 
-       } 
         <div className="relative" ref={dropdownRef}>
-          <div className="flex md:flex-wrap justify-end items-center gap-4 mt-4">
+          <div className="flex justify-end items-center gap-4 mt-4">
             <input
               type="text"
               placeholder="Search by name or leave type..."
