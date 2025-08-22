@@ -13,13 +13,11 @@ interface LeaveProgressBarProps {
 
 const LeaveProgressBar: React.FC<LeaveProgressBarProps> = ({ leaveData }) => {
   return (
-    <div className="space-y-4 w-full h-full bg-white py-3 px-4 shadow-md rounded-md border border-[#dbe9f1]">
+    <div className="space-y-3 w-full h-full bg-white py-3 px-4 shadow-md rounded-md border border-[#dbe9f1]">
     
       <div className="flex justify-between items-center mb-1">
         <h1 className="text-xl font-semibold text-[#113F67]">Available Leave Days</h1>
-        <button className="text-gray-500 hover:text-[#113F67]">
-          <MoreVertical className="w-5 h-5" />
-        </button>
+     
       </div>
 
     

@@ -16,7 +16,7 @@ import {
   Settings,
   Repeat,
   BarChart2,
-  Shield
+  Shield,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../feature/user/userSlice";
@@ -32,6 +32,7 @@ import {
 } from "../../../api/notification";
 import BackButton from "../../common/BackButtonComp/BackButton";
 import { getProfileImage } from "../../../api/auth";
+import { Link } from "react-router-dom";
 
 const AdminLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const AdminLayout: React.FC = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [profileImage,setProfileImage]= useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
     {}
   );
@@ -116,7 +117,11 @@ const AdminLayout: React.FC = () => {
       },
 
       { label: "Profile", path: "/admin/profile", icon: User },
-       { label: "Company Policies", path: "/admin/company-policy", icon: Shield },
+      {
+        label: "Company Policies",
+        path: "/admin/company-policy",
+        icon: Shield,
+      },
     ],
     admin: [
       { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
@@ -137,7 +142,11 @@ const AdminLayout: React.FC = () => {
       },
 
       { label: "Profile", path: "/admin/profile", icon: User },
-       { label: "Company Policies", path: "/admin/company-policy", icon: Shield },
+      {
+        label: "Company Policies",
+        path: "/admin/company-policy",
+        icon: Shield,
+      },
     ],
     hr: [
       { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
@@ -158,7 +167,11 @@ const AdminLayout: React.FC = () => {
       },
 
       { label: "Profile", path: "/admin/profile", icon: User },
-       { label: "Company Policies", path: "/admin/company-policy", icon: Shield },
+      {
+        label: "Company Policies",
+        path: "/admin/company-policy",
+        icon: Shield,
+      },
     ],
     employee: [
       { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
@@ -166,7 +179,6 @@ const AdminLayout: React.FC = () => {
       { label: "Leave Requests", path: "/leave-requests", icon: CalendarCheck },
 
       { label: "Profile", path: "/profile", icon: User },
-      
     ],
   };
 
@@ -206,18 +218,18 @@ const AdminLayout: React.FC = () => {
     }
   };
 
-  useEffect(()=>{
-      const getProfile = async (id:string) =>{
-      try{
-        const imageURL = await getProfileImage(id)
-        setProfileImage(imageURL)
-      }catch(error){
-        console.log(error)
+  useEffect(() => {
+    const getProfile = async (id: string) => {
+      try {
+        const imageURL = await getProfileImage(id);
+        setProfileImage(imageURL);
+      } catch (error) {
+        console.log(error);
       }
-    }
-    getProfile(id)
-    },[])
-    
+    };
+    getProfile(id);
+  }, []);
+
   const formatRole = (role: string) => {
     if (role === "superadmin") return "Super-Admin";
     if (role === "admin") return "Admin";
@@ -230,7 +242,10 @@ const AdminLayout: React.FC = () => {
     <>
       <div className="flex h-screen bg-[#F3F9FB]">
         <aside className="w-16 md:w-72 bg-[#113F67] text-white flex flex-col p-4 shadow-lg transition-all duration-300">
-          <div className="flex items-center gap-4 p-0 md:p-3 bg-transparent md:bg-gray-300 lg:rounded-xl mb-6 font-bold text-[#113F67]">
+          <Link
+            to="/admin/profile"
+            className="flex items-center gap-4 p-0 md:p-3 bg-transparent md:bg-gray-300 lg:rounded-xl mb-6 font-bold text-[#113F67]"
+          >
             <img
               src={profileImage || userProfile}
               alt="Profile"
@@ -245,7 +260,7 @@ const AdminLayout: React.FC = () => {
                 {role}
               </div>
             </div>
-          </div>
+          </Link>
 
           <nav className="flex flex-col gap-3 flex-grow">
             {linksToShow.map(({ label, path, icon: Icon, disabled }) => (
@@ -278,9 +293,7 @@ const AdminLayout: React.FC = () => {
                     <span
                       className="ml-2 text-xs bg-[#113F67] text-white font-semibold px-1 py-0.1 rounded-full"
                       title="Under Progress"
-                    >
-                      
-                    </span>
+                    ></span>
                   )}
                 </NavLink>
               </div>
@@ -355,10 +368,12 @@ const AdminLayout: React.FC = () => {
           </div>
 
           <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
-            <header className={`mb-3 flex ${location.pathname!=="/admin/dashboard" ?"gap-2" :"gap-4" }`}>
-              {location.pathname !== "/admin/dashboard" && ( 
-                
-                <BackButton/>)}
+            <header
+              className={`mb-3 flex ${
+                location.pathname.split("/").length > 3 ? "gap-2" : "gap-4"
+              }`}
+            >
+              {location.pathname.split("/").length > 3 && <BackButton />}
               <h2 className="text-xl font-semibold text-[#113F67]">
                 {pageTitle}
               </h2>

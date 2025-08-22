@@ -52,7 +52,14 @@ const EmployeeManagement = () => {
     sortOrder: "",
     email: "",
   });
-
+  const [tempFilters, setTempFilters] = useState({
+    joiningDate: "",
+    employmentType: "",
+    designation: "",
+    gender: "",
+    sortOrder: "",
+    email: "",
+  });
   const headers = [
     "Name",
     "Email",
@@ -231,7 +238,7 @@ const EmployeeManagement = () => {
               <ListFilter size={20} /> Filters <ChevronDown size={16} />
             </button>
             {isOpen && (
-              <div className="absolute right-0 mt-2 bg-white shadow-lg border rounded-xl w-64 z-50  overflow-auto max-h-80">
+              <div className="absolute right-0 mt-2 bg-white shadow-lg border rounded-xl w-64 z-50  overflow-auto scroll-visible max-h-80">
                 <div className="p-4 space-y-3 overflow-auto ">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -240,9 +247,9 @@ const EmployeeManagement = () => {
                     <input
                       type="text"
                       className="w-full border px-2 py-1 rounded"
-                      value={filters.designation}
+                      value={tempFilters.designation}
                       onChange={(e) =>
-                        setFilters((prev) => ({
+                        setTempFilters((prev) => ({
                           ...prev,
                           designation: e.target.value,
                         }))
@@ -256,9 +263,9 @@ const EmployeeManagement = () => {
                     </label>
                     <select
                       className="w-full border px-2 py-1 rounded"
-                      value={filters.employmentType}
+                      value={tempFilters.employmentType}
                       onChange={(e) =>
-                        setFilters((prev) => ({
+                        setTempFilters((prev) => ({
                           ...prev,
                           employmentType: e.target.value,
                         }))
@@ -276,9 +283,9 @@ const EmployeeManagement = () => {
                     </label>
                     <select
                       className="w-full border px-2 py-1 rounded"
-                      value={filters.gender}
+                      value={tempFilters.gender}
                       onChange={(e) =>
-                        setFilters((prev) => ({
+                        setTempFilters((prev) => ({
                           ...prev,
                           gender: e.target.value,
                         }))
@@ -298,9 +305,9 @@ const EmployeeManagement = () => {
                     <input
                       type="date"
                       className="w-full border px-2 py-1 rounded"
-                      value={filters.joiningDate}
+                      value={tempFilters.joiningDate}
                       onChange={(e) =>
-                        setFilters((prev) => ({
+                        setTempFilters((prev) => ({
                           ...prev,
                           joiningDate: e.target.value,
                         }))
@@ -315,9 +322,9 @@ const EmployeeManagement = () => {
                     <input
                       type="text"
                       className="w-full border px-2 py-1 rounded"
-                      value={filters.email}
+                      value={tempFilters.email}
                       onChange={(e) =>
-                        setFilters((prev) => ({
+                        setTempFilters((prev) => ({
                           ...prev,
                           email: e.target.value,
                         }))
@@ -331,9 +338,9 @@ const EmployeeManagement = () => {
                     </label>
                     <select
                       className="w-full border px-2 py-1 rounded"
-                      value={filters.sortOrder}
+                      value={tempFilters.sortOrder}
                       onChange={(e) =>
-                        setFilters((prev) => ({
+                        setTempFilters((prev) => ({
                           ...prev,
                           sortOrder: e.target.value,
                         }))
@@ -346,23 +353,28 @@ const EmployeeManagement = () => {
                   </div>
 
                   <button
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      setFilters(tempFilters);
+                      setIsOpen(false);
+                    }}
                     className="w-full mt-2 bg-[#226597] text-white py-1 cursor-pointer rounded hover:hover:bg-[#1c4c7a]"
                   >
                     Apply Filters
                   </button>
 
                   <button
-                    onClick={() =>
-                      setFilters({
+                    onClick={() => {
+                      const cleared = {
                         joiningDate: "",
                         employmentType: "",
                         designation: "",
                         gender: "",
                         sortOrder: "",
                         email: "",
-                      })
-                    }
+                      };
+                      setFilters(cleared);
+                      setTempFilters(cleared);
+                    }}
                     className="w-full mt-2 bg-gray-200 text-black py-1 rounded hover:bg-gray-300"
                   >
                     Clear Filters

@@ -5,13 +5,11 @@ import BirthdayBox from "../components/BirthdayBox/BirthdayBox";
 import LeaveProgressBar, {
   LeaveType,
 } from "../components/LeaveProgressBar/LeaveProgressBar";
+import { useEmployeeLeaveStats } from "./useEmployeeLeaveStats";
 
 const EmployeeDashboard = () => {
-  const leaveStats: LeaveType[] = [
-    { type: "Sick Leave", used: 4, total: 10 },
-    { type: "Casual Leave", used: 2, total: 5 },
-    { type: "Annual Leave", used: 8, total: 15 },
-  ];
+ const { leaveStats } = useEmployeeLeaveStats();
+
 
   const birthdays = [
     { name: "Aisha Khan", date: "2025-04-28" },
@@ -43,7 +41,7 @@ const EmployeeDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <AttendanceTracker />
         <div className="w-full">
-          <LeaveProgressBar leaveData={leaveStats} />
+           <LeaveProgressBar leaveData={leaveStats} />
         </div>
       </div>
 

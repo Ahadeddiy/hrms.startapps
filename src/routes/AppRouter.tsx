@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import LeaveRequestForm from "../components/Form/LeaveForm/LeaveForm";
 import SignUpPage from "../pages/SignUpPage";
@@ -51,10 +51,7 @@ const AppRouter = () => {
           <Route path="employee-management" element={<EmployeeManagement />} />
           <Route path="attendance" element={<AttendanceManagement />} />
           <Route path="add-employee" element={<RegisterPage />} />
-          <Route
-            path="add-employee-details/:id"
-            element={<EmployeeForm />}
-          />
+          <Route path="add-employee-details/:id" element={<EmployeeForm />} />
           <Route path="leave-requests" element={<LeaveRequests />} />
           <Route path="leave-apply" element={<LeaveRequestForm />} />
           <Route path="approval-history" element={<ApprovalHistory />} />
@@ -63,7 +60,7 @@ const AppRouter = () => {
           <Route path="reports" element={<Reports />} />
           <Route path="/admin/employee/:id" element={<Profile />} />
           <Route path="/admin/employee/edit/:id" element={<Profile />} />
-            <Route path="company-policy" element={<CompanyPolicypage />} />
+          <Route path="company-policy" element={<CompanyPolicypage />} />
         </Route>
 
         <Route
@@ -75,6 +72,7 @@ const AppRouter = () => {
           }
         >
           <Route index element={<EmployeeDashboard />} />
+          <Route path="dashboard" element={<EmployeeDashboard />} />
           <Route path="attendance" element={<AttendanceManagement />} />
           <Route path="leaves" element={<EmployeeLeaveDashboard />} />
           <Route path="request-leave" element={<LeaveRequestForm />} />

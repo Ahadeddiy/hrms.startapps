@@ -5,7 +5,7 @@ import { RootState } from "../../../store/store";
 import { ArrowLeft } from "lucide-react";
 import { popFromHistory } from "../../../feature/navigation/navigationSlice";
 
-const BackButton = ({ fallbackPath = "/dashboard", label = "Go Back" }) => {
+const BackButton = ({ fallbackPath = "/", label = "Go Back" }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const history = useSelector((state: RootState) => state.navigation.history);

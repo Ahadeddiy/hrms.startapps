@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -12,7 +12,7 @@ import {
   FileText,
   Repeat,
   Mail,
-  Shield
+  Shield,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../feature/user/userSlice";
@@ -29,6 +29,7 @@ import {
 } from "../../../api/notification";
 import BackButton from "../../common/BackButtonComp/BackButton";
 import { getProfileImage } from "../../../api/auth";
+import { Link } from "react-router-dom";
 
 const EmployeeLayout: React.FC = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const EmployeeLayout: React.FC = () => {
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [profileImage,setProfileImage]=useState("");
+  const [profileImage, setProfileImage] = useState("");
 
   const role = user?.role || "Employee";
   const id = user?.userId;
@@ -53,10 +54,9 @@ const EmployeeLayout: React.FC = () => {
   //   setPageTitle(matched?.label || "Dashboard");
   // }, [location.pathname]);
 
-
-    useEffect(() => {
+  useEffect(() => {
     const matched = [...linksToShow]
-      .sort((a,b) => b.path.length - a.path.length)
+      .sort((a, b) => b.path.length - a.path.length)
       .find((link) => location.pathname.startsWith(link.path));
 
     setPageTitle(matched?.label || "Dashboard");
@@ -67,7 +67,11 @@ const EmployeeLayout: React.FC = () => {
     { label: string; path: string; icon: React.ElementType }[]
   > = {
     Employee: [
-      { label: "Dashboard", path: "/employee/dashboard", icon: LayoutDashboard },
+      {
+        label: "Dashboard",
+        path: "/employee/dashboard",
+        icon: LayoutDashboard,
+      },
       { label: "Attendance", path: "/employee/attendance", icon: UserCheck },
       {
         label: "Leave Requests",
@@ -75,7 +79,11 @@ const EmployeeLayout: React.FC = () => {
         icon: CalendarCheck,
       },
       { label: "Profile", path: "/employee/profile", icon: User },
-       { label: "Company Policies", path: "/employee/company-policy", icon: Shield },
+      {
+        label: "Company Policies",
+        path: "/employee/company-policy",
+        icon: Shield,
+      },
     ],
   };
 
@@ -132,17 +140,17 @@ const EmployeeLayout: React.FC = () => {
     }
   };
 
-  useEffect(()=>{
-    const getProfile = async (id:string) =>{
-    try{
-      const imageURL = await getProfileImage(id)
-      setProfileImage(imageURL)
-    }catch(error){
-      console.log(error)
-    }
-  }
-  getProfile(id)
-  },[])
+  useEffect(() => {
+    const getProfile = async (id: string) => {
+      try {
+        const imageURL = await getProfileImage(id);
+        setProfileImage(imageURL);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProfile(id);
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -159,16 +167,15 @@ const EmployeeLayout: React.FC = () => {
     }
   }, [id]);
 
-  const bellButtonRef = useRef()
-
+  const bellButtonRef = useRef();
 
   return (
     <>
       <div className="flex h-screen bg-[#F3F9FB]">
         <aside className="w-16 md:w-72 bg-[#113F67] text-white flex flex-col items-center md:items-stretch p-4 shadow-lg transition-all duration-300">
-          <div className="hidden md:flex items-center gap-4 p-3 bg-[#226597] rounded-xl mb-6">
+         <Link to = "/employee/profile"  className="hidden md:flex items-center gap-4 p-3 bg-[#226597] rounded-xl mb-6">
             <img
-              src={profileImage||userProfile}
+              src={profileImage || userProfile}
               alt="Profile"
               className="w-14 h-14 rounded-full object-cover border-2 border-white p-0.5"
             />
@@ -176,7 +183,7 @@ const EmployeeLayout: React.FC = () => {
               <div className="text-lg font-semibold capitalize">{fullName}</div>
               <div className="text-sm text-white capitalize">{role}</div>
             </div>
-          </div>
+          </Link>
 
           <nav className="flex flex-col gap-3 flex-grow">
             {linksToShow.map(({ label, path, icon: Icon }) =>
@@ -271,10 +278,14 @@ const EmployeeLayout: React.FC = () => {
             </div>
           </div>
           <section className="bg-white rounded-xl shadow-md p-4 min-h-[calc(100vh-160px)]">
-            <header className={`flex mb-3 ${location.pathname!=="/employee/dashboard"} ? "gap-2":"gap-4"`}>
-              {location.pathname!=="/employee/dashboard" && (
-                <BackButton/>
-              )}
+            <header
+              className={`flex mb-3 ${
+                location.pathname.split("/").length > 3 
+                  ? "gap-2"
+                  : "gap-4"
+              }`}
+            >
+              {location.pathname.split("/").length > 3 &&  <BackButton />}
               <h2 className="text-xl font-semibold text-[#113F67]">
                 {pageTitle}
               </h2>

@@ -110,7 +110,7 @@ const RegisterPage: React.FC = () => {
               </label>
               <select
                 {...register("role")}
-                className="w-full p-2 rounded-md border border-[#87C0CD] bg-[#F3F9FB] text-[#113F67] font-medium focus:outline-none focus:ring-2 focus:ring-[#226597] transition-all"
+                className="w-full p-2 rounded-md border border-[#87C0CD] bg-[#F3F9FB] text-[#113F67] font-medium focus:outline-none focus:ring-2 focus:ring-[#226597] transition-all  overflow-auto scroll-auto scroll-visible"
               >
                 <option value="">-- Select Role --</option>
                 <option value="Admin">Admin</option>
