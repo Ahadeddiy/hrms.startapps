@@ -16,7 +16,6 @@ import {
   Settings,
   Repeat,
   BarChart2,
-  Shield
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../feature/user/userSlice";
@@ -116,7 +115,6 @@ const AdminLayout: React.FC = () => {
       },
 
       { label: "Profile", path: "/admin/profile", icon: User },
-       { label: "Company Policies", path: "/admin/company-policy", icon: Shield },
     ],
     admin: [
       { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
@@ -137,7 +135,6 @@ const AdminLayout: React.FC = () => {
       },
 
       { label: "Profile", path: "/admin/profile", icon: User },
-       { label: "Company Policies", path: "/admin/company-policy", icon: Shield },
     ],
     hr: [
       { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
@@ -158,7 +155,6 @@ const AdminLayout: React.FC = () => {
       },
 
       { label: "Profile", path: "/admin/profile", icon: User },
-       { label: "Company Policies", path: "/admin/company-policy", icon: Shield },
     ],
     employee: [
       { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
@@ -166,7 +162,6 @@ const AdminLayout: React.FC = () => {
       { label: "Leave Requests", path: "/leave-requests", icon: CalendarCheck },
 
       { label: "Profile", path: "/profile", icon: User },
-      
     ],
   };
 
